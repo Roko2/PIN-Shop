@@ -7,6 +7,7 @@ var pcShop = angular.module('pcShop', []);
 //   }
 pcShop.controller('mainController', function ($scope, $http) {
     $scope.oKategorije = [];
+    $scope.oPodKategorije=[];
     $http({
         method: "GET",
         url: "./kategorije.php"

@@ -27,11 +27,8 @@ button{
   color: white !important;
   transition: 0.3s !important;
 }
-.dropdown-menu{
-  min-width: 5.5rem !important;
-  max-width: 5rem !important;
-  margin: 0 auto !important;
-  max-height: 4em !important;
+.dropdown-menu {
+  margin-top: 0;
 }
 span{
   font-family: 'Merriweather',serif;
@@ -102,7 +99,7 @@ span{
  margin-left: auto;
 }
 #slikaAnim{
- border-radius: 50% !important;
+ border-radius: 50%;
 }
 @media (prefers-reduced-motion: no-preference) {
   #slikaAnim {
@@ -117,4 +114,16 @@ span{
   to {
     transform: rotate(360deg);
   }
+}
+
+.navbar .nav-item:not(:last-child) {
+  margin-right: 35px;
+}
+ 
+.dropdown-toggle::after {
+   transition: transform 0.15s linear; 
+}
+ 
+.show.dropdown .dropdown-toggle::after {
+  transform: translateY(3px);
 }
