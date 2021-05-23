@@ -21,14 +21,14 @@ h1,h2,h3,h4,h5{
 button{
 	margin-right:5px !important;
 }
-.link:hover {
-  background-color:tomato !important;
-  border: none !important;
-  color: white !important;
-  transition: 0.3s !important;
-}
 .dropdown-menu {
   margin-top: 0;
+}
+.dropdown-item{
+  cursor: pointer;
+}
+.dropdown-item:hover{
+  font-weight: bold;
 }
 span{
   font-family: 'Merriweather',serif;
@@ -63,7 +63,6 @@ span{
   height: 250px !important;
 }
 .naslov{
-  color: white !important;
   font-size: 65px !important;
   text-align:  center !important;
   padding: 95px 0 !important;
@@ -121,9 +120,9 @@ span{
 }
  
 .dropdown-toggle::after {
-   transition: transform 0.15s linear; 
+  transition: transform 0.15s linear; 
 }
- 
+
 .show.dropdown .dropdown-toggle::after {
-  transform: translateY(3px);
+ transform: translateY(3px);
 }
