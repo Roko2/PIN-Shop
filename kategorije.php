@@ -26,6 +26,7 @@ ini_set('memory_limit', '2048M');
                }
                $kategorija=new Category($oRow['Id'],$oRow['parentNaziv'],$poljePotkategorija);
                array_push($Kategorije,$kategorija);
+             //  var_dump($Kategorije);
                $poljePotkategorija=array();
            }
     echo(json_encode($Kategorije));

@@ -73,9 +73,9 @@ span{
   text-decoration: none !important; 
   color:black !important;
 }
-#navbar{
+/* #navbar{
   z-index:999 !important;
-}
+} */
 .odjava{
   z-index: 999 !important;
 }
