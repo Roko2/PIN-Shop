@@ -31,24 +31,61 @@ class podKategorija{
 }
 
 class Artikl{
+    public $m_nIdArtikla;
+    public $m_sNazivArtikla;
+    public $m_sOpisArtikla;
+    public $m_sJmjArtikla;
+    public $m_fJdCijenaArtikla;
+    public $m_nIdPotkategorijaArtikla;
 
+    public function __construct($id,$naziv,$opis,$jmj,$jedCijena,$potkategorija){
+        $this->m_nIdArtikla=$id;
+        $this->m_sNazivArtikla=$naziv;
+        $this->m_sJmjArtikla=$jmj;
+        $this->m_fJdCijenaArtikla=$jedCijena;
+        $this->m_nIdPotkategorije=$potkategorija;
+    }
 }
 
-class Stavka{
+class Stavka extends Artikl{
+    public $m_nIdStavke;
+    public $m_fUkCijena;
+    public $m_nKolicina;
 
+    public function __construct($id,$ukCijena,$kolicina){
+        $this->m_nIdStavke=$id;
+        $this->m_fUkCijena=$ukCijena;
+        $this->m_nKolicina=$kolicina;
+    }
+}
+
+class Racun{
+    public $m_nSifraRacuna;
+    public $m_nOibZaposlenika;
+    public $m_fUkupanIznos;
+    public $m_sDatum;
+    public $m_vStavke=array();
+
+    public function __construct($sifra,$oibZaposlenik,$ukIznos,$datum,$stavke){
+        $this->m_nSifraRacuna=$sifra;
+        $this->m_nOibZaposlenika=$oibZaposlenik;
+        $this->m_fUkupanIznos=$ukIznos;
+        $this->m_sDatum=$datum;
+        $this->m_vStave=(array)$stavke;
+    }
 }
 
 abstract class Osoba{
-    public $m_nOib="";
-    public $m_sIme="";
-    public $m_sPrezime="";
-    public $m_nDatumRodjenja="";
+    public $m_nOib;
+    public $m_sIme;
+    public $m_sPrezime;
+    public $m_nDatumRodjenja;
 
-    public function __construct($oib=null,$ime=null,$prezime=null,$datumRodjenja=null){
-       if($oib) $this->m_nOib=$oib;
-       if($ime) $this->m_sIme=$ime;
-       if($prezime)  $this->m_sPrezime=$prezime;
-       if($datumRodjenja) $this->m_nDatumRodjenja=$datumRodjenja;
+    public function __construct($oib,$ime,$prezime,$datumRodjenja){
+       $this->m_nOib=$oib;
+       $this->m_sIme=$ime;
+       $this->m_sPrezime=$prezime;
+       $this->m_nDatumRodjenja=$datumRodjenja;
     }
     // public function ProvjeriOib($m_nOib){
     //     if ( mb_strlen( $m_nOib ) != 11 || ( ! is_numeric( $m_nOib ) ) ) {

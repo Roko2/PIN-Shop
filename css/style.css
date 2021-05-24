@@ -9,15 +9,12 @@ h1,h2,h3,h4,h5{
 	font-family: 'Merriweather',serif;
 }
 
-/* .parallax {
-  background-image: url("../img/macro.jpeg");
+.parallax {
+  position: relative;
   min-height: 300px; 
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  max-height: 400px;
   margin: 0 auto;
-} */
+}
 button{
 	margin-right:5px !important;
 }
@@ -63,9 +60,11 @@ span{
   height: 250px !important;
 }
 .naslov{
-  font-size: 65px !important;
-  text-align:  center !important;
-  padding: 95px 0 !important;
+  font-size: 50px !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .odjaviSe{
   font-size: 15px !important;
@@ -88,7 +87,6 @@ span{
 }
 .sadrzaj{
   min-height: 100% !important;
-  margin-bottom: -50px !important;
 }
 .footer,
 .poguraj {
@@ -99,6 +97,9 @@ span{
 }
 #slikaAnim{
  border-radius: 50%;
+ z-index: -1;
+ position: relative;
+ width: 20%;
 }
 @media (prefers-reduced-motion: no-preference) {
   #slikaAnim {
