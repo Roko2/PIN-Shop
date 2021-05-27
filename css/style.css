@@ -60,11 +60,13 @@ span{
   height: 250px !important;
 }
 .naslov{
-  font-size: 50px !important;
+  font-size: 3vw;
   position: absolute;
   top: 50%;
   left: 50%;
+  font-weight: bold;
   transform: translate(-50%, -50%);
+  text-shadow: 1px 1px 1px black;
 }
 .odjaviSe{
   font-size: 15px !important;
@@ -126,4 +128,26 @@ span{
 
 .show.dropdown .dropdown-toggle::after {
  transform: translateY(3px);
+}
+
+.img{
+  cursor: pointer;
+  position: relative;
+}
+.img:hover{
+  transform: translateY(2px);
+  background-color: white;
+  border-radius: 25%;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+
+.fa:hover{
+  transition: 0.3s;
+  color:#E77482 !important;
+  cursor: pointer;
 }

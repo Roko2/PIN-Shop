@@ -8,7 +8,6 @@ $(window).on("load resize", function() {
   if (this.matchMedia("(min-width: 768px)").matches) {
     $(".dropdown").hover(
       function() {
-        console.log("da");
         const $this = $(this);
         $this.addClass(showClass);
         $this.find($(".dropdown-toggle")).attr("aria-expanded", "true");
@@ -25,3 +24,17 @@ $(window).on("load resize", function() {
     $dropdown.off("mouseenter mouseleave");
   }
 });
+
+
+  window.onscroll = function() {myFunction()};
+  var navbar = document.getElementById("navbar");
+  var sticky = navbar.offsetTop;
+  console.log(sticky);
+  function myFunction() {
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add("sticky");
+    } else {
+      navbar.classList.remove("sticky");
+    }
+  }
+

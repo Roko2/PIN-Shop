@@ -1,5 +1,5 @@
 <?php
-include 'classes.php';
+include '../classes/Configuration.php';
 $oVeza=new Configuration();
 try
 {

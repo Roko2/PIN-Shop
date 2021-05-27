@@ -1,8 +1,9 @@
 <?php
-include 'connection.php';
+include '../database/connection.php';
+include '../classes/Category.php';
+include '../classes/SubCategory.php';
 header('Content-Type: text/html; charset=utf-8');
 ini_set('memory_limit', '2048M');
-         // $sQuery2="SELECT DISTINCT kategorija.Id,potkategorije.KategorijaID,kategorija.parentNaziv,potkategorije.Naziv FROM kategorija LEFT JOIN potkategorije ON kategorija.Id=potkategorije.KategorijaID";
             $sQuery2="SELECT * FROM potkategorije";
           $oRecord2 = $oConnection->query($sQuery2);
           $potKategorije=array();
@@ -26,7 +27,6 @@ ini_set('memory_limit', '2048M');
                }
                $kategorija=new Category($oRow['Id'],$oRow['parentNaziv'],$poljePotkategorija);
                array_push($Kategorije,$kategorija);
-             //  var_dump($Kategorije);
                $poljePotkategorija=array();
            }
     echo(json_encode($Kategorije));
