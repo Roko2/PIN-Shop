@@ -21,6 +21,7 @@ button{
 .dropdown-menu {
   margin-top: 0;
 }
+
 .dropdown-item{
   cursor: pointer;
 }
@@ -41,7 +42,6 @@ span{
 .naslovi{
   font-weight: bold !important;
 }
-
 .col-sm{
   line-height: 35px !important;
 }
@@ -102,6 +102,7 @@ span{
  z-index: -1;
  position: relative;
  width: 20%;
+ opacity: 0.3;
 }
 @media (prefers-reduced-motion: no-preference) {
   #slikaAnim {
@@ -144,10 +145,12 @@ span{
   top: 0;
   width: 100%;
 }
-
-
 .fa:hover{
   transition: 0.3s;
   color:#E77482 !important;
   cursor: pointer;
+}
+
+.sve{
+  margin: 5% 15% 0%;
 }

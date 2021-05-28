@@ -37,4 +37,3 @@ $(window).on("load resize", function() {
       navbar.classList.remove("sticky");
     }
   }
-
