@@ -42,9 +42,6 @@ span{
 .naslovi{
   font-weight: bold !important;
 }
-.col-sm{
-  line-height: 35px !important;
-}
 .link{
   text-decoration: none !important;
   color: black !important;
@@ -84,8 +81,14 @@ span{
     padding-top: 25% !important;
   }
 }
+.visina{
+  line-height: 35px;
+}
+.row{
+  height: 15% !important;
+}
 .container{
-  padding-bottom: 10% !important;
+  height: 200px;
 }
 .sadrzaj{
   min-height: 100% !important;
@@ -144,13 +147,125 @@ span{
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 999;
 }
+#modalPrijava {
+  pointer-events: none;
+}
+.modal-backdrop{
+  opacity: 0.9 !important;
+}
+
 .fa:hover{
-  transition: 0.3s;
-  color:#E77482 !important;
   cursor: pointer;
 }
 
-.sve{
-  margin: 5% 15% 0%;
+.mainWrapper{
+  display: block;
+  position: relative;
+  top:0;
+}
+.tableContainer{
+  margin: 0% 10% 0%;
+}
+.mainWrapper::after{
+  content: "";
+  background-image: url('../img/tester.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+/* #tablicaArtikli tbody{
+    display:block;
+    overflow:auto;
+    height:200px;
+}
+
+#tablicaArtikli thead tr{
+  display:block;
+  text-align: center;
+} */
+/* #tablicaArtikli{
+ margin-top: 50px;
+} */
+.form-group small {
+	color: #e74c3c !important;
+	position: absolute !important;
+	bottom: 0 !important;
+	left: 0 !important ;
+	visibility: hidden !important;
+}
+.form-group.success input {
+	border-color: #2ecc71 !important;
+}
+
+.form-group.error input {
+	border-color: #e74c3c !important;
+}
+.form-group.error small {
+	visibility: visible !important;
+}
+#kosarica{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  text-decoration: none;
+  color:#000;
+  border-radius: 50%;
+  margin:0 30px;
+  box-shadow: 0 0 20px 10px rgba(253, 250, 250, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s;
+}
+.ikonaKosarica{
+  line-height: 50px;
+  font-size: 25px;
+  position: relative;
+  z-index: 10;
+  transition: color 0.5s;
+}
+#kosarica::after{
+  content:'';
+  width: 100%;
+  height: 100%;
+  top:-60px;
+  left: 0;
+  background: linear-gradient(-45deg,#ed1c94,#ffec17);
+  position: absolute;
+  transition: 0.5s;
+}
+
+#kosarica:hover::after{
+  top:0;
+}
+
+#kosarica:hover .ikonaKosarica{
+  color:#fff;
+}
+
+#kosarica:hover{
+  transform: translateY(-5px);
+}
+
+#pocetna{
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  height: 6%;
+  padding: 15px;
+  border-radius: 4px;
 }

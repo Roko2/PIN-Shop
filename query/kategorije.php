@@ -9,7 +9,7 @@ ini_set('memory_limit', '2048M');
           $potKategorije=array();
           while($oRow2 = $oRecord2->fetch(PDO::FETCH_BOTH))
           {
-              $potkategorija=new podKategorija($oRow2['ID'],$oRow2['Naziv'],$oRow2['KategorijaID']);
+              $potkategorija=new podKategorija($oRow2['IDPotkategorije'],$oRow2['NazivPotkategorije'],$oRow2['KategorijaID']);
               array_push($potKategorije,$potkategorija);
           }
        

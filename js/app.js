@@ -14,17 +14,17 @@ var pcShop = angular.module('pcShop', []);
 //    });
 //    });
 
-pcShop.controller('mainController', function ($scope, $http) {
+pcShop.controller('mainController', function ($scope,$q, $http) {
     $scope.oKategorije = [];
-    $scope.oPodKategorije=[];
-    $http({
-        method: "GET",
-        url: "./query/kategorije.php"
-    }).then(function (response) {
-        console.log(response.data); 
-        $scope.oKategorije = response.data;
-    }, function (response) {
-        console.log('Doslo je do poreške');
-    });
+    $scope.oArtikli=[];
+    $scope.allData=[];
+    $q.all([
+        $http.get("./query/kategorije.php"),
+        $http.get("./query/artikli.php")
+      ]).then(function(results) {
+          $scope.oKategorije=results[0].data;
+          $scope.vArtikli=results[1].data;
+         //console.log(results[0].data);
+      });
 });
 

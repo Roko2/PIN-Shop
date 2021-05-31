@@ -10,6 +10,7 @@ class Artikl{
     public function __construct($id,$naziv,$opis,$jmj,$jedCijena,$potkategorija){
         $this->m_nIdArtikla=$id;
         $this->m_sNazivArtikla=$naziv;
+        $this->m_sOpisArtikla=$opis;
         $this->m_sJmjArtikla=$jmj;
         $this->m_fJdCijenaArtikla=$jedCijena;
         $this->m_nIdPotkategorije=$potkategorija;

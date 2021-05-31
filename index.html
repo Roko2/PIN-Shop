@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css">
     <link rel="stylsheet" href="assets/plugins/fontawesome-free-5.15.3-web/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/plugins/fontawesome-free-5.15.3-web/css/all.min.css">
+    <link rel="stylesheet" href="assets/plugins/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="css/style.css">
     <title>PIN PCShop</title>
 </head>
@@ -25,21 +26,18 @@
               </button>
               <div class="collapse navbar-collapse" id="smanjeniNavbar">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link text-white odabrani" >Početna</a></li>
-        <li class="nav-item dropdown mr-auto" ng-repeat="kategorija in oKategorije" ng-if="$index < 5">
-          <a id="{{$index}}" aria-expanded="false"  aria-haspopup="true" class="nav-link dropdown-toggle text-white odabrani" data-toggle="dropdown" >{{kategorija.m_sNazivCategory}}</a>
+                <li class="nav-item"><a id="pocetak" class="nav-link text-white odabrani" >Početna</a></li>
+        <li class="nav-item dropdown mr-auto" ng-repeat="kategorija in oKategorije">
+          <a aria-expanded="false"  aria-haspopup="true" class="nav-link dropdown-toggle text-white odabrani" data-toggle="dropdown" ><i id="navIcon{{kategorija.m_nIdCategory}}"></i>{{kategorija.m_sNazivCategory}}</a>
             <div id="drop{{$index}}" class="dropdown-menu" aria-labelledby="#drop{{$index}}">
                 <a class="dropdown-item" ng-repeat="x in kategorija.m_oPotkategorije track by x.m_nId" >{{x.m_sNaziv}}</a>
             </div>
         </li>
-        <li class="nav-item dropdown mr-auto" ng-repeat="kategorija in oKategorije" ng-if="$index > 5">
-            <a class="nav-link text-white odabrani" >{{kategorija.m_sNazivCategory}}</a>
-          </li>
          </ul>
 
              <div id="korisnik" class="navbar-nav nav-item">
                  <!-- <img src="img/cart.png" class="img mr-4"> -->
-                 <span><i class="fa fa-shopping-cart fa-2x text-white mr-4" title="Košarica" aria-hidden="true"></i></span>
+                 <span id="kosarica" class="bg-white"><i class="fa fa-shopping-cart ikonaKosarica mr-1" title="Košarica" aria-hidden="true"></i></span>
                  <button type="button" class="btn btn-primary text-white" onclick="Odjava()">Odjava</button>
                 </div>
             </div>
@@ -47,7 +45,32 @@
            </nav>
     </header> 
     <!-- <div ng-view></div>    -->
-    <div class="sve text-white"><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    <div class="mainWrapper">
+        <div class="tableContainer bg-secondary">
+        <table id="tablicaArtikli" class="table table-hover table-bordered table-responsive text-white mx-auto text-center" width="100%">
+          <thead>
+            <tr>
+                <th class="align-middle">Rbr</th>
+                <th class="align-middle">Naziv</th>
+                <th class="align-middle">Opis</th>
+                <th class="align-middle">Jedinica mjere</th>
+                <th class="align-middle">Cijena</th>
+                <th class="align-middle">Kategorija</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="artikl in vArtikli track by artikl.m_nIdArtikla">
+                <td class="align-middle">{{$index}}</td>
+                <td class="align-middle">{{artikl.m_sNazivArtikla}}</td>
+                <td class="align-middle">{{artikl.m_sOpisArtikla}}</td>
+                <td class="align-middle">{{artikl.m_sJmjArtikla}}</td>
+                <td class="align-middle">{{artikl.m_fJdCijenaArtikla}}</td>
+                <td class="align-middle">{{artikl.m_nIdPotkategorije}}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <!--     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
     </p>
     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
@@ -109,19 +132,71 @@
     </p>
     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
-    </p></div>
+    </p> -->
+</div> 
     <div class="poguraj"></div>
 </div>
+
+<!-- Modal prijava --------------------------------------------------------------------------------->
+<div class="modal fade" id="modalPrijava" tabindex="-1" role="dialog" aria-labelledby="modalLozinka" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="title text-dark text-center">Prijava u sustav PIN PC Shop</h4>
+        </div>
+        <div class="modal-body">
+            <div class="jumbotron jumbotron-fluid login mb-5 w-100 mx-auto rounded" >
+                <div class="container">
+                        <form>
+                            <div class="row">
+                            <div class="col-sm-12 visina">	
+                        <div class="form-group">	
+                            <label class="font-weight-bold" for="inptEmail">Email adresa</label>
+                            <input type="text" class="form-control bg-white text-dark email" placeholder="Unesite Email adresu" id="inptEmail">
+                            <small class="ml-3"></small>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 visina">
+                          <div class="form-group">
+                              <label class="font-weight-bold" for="inptLozinka">Lozinka</label>
+                              <div class="input-group">
+                            <input type="password" class="form-control bg-white text-dark" data-toggle="password" placeholder="Lozinka..." id="inptLozinka">
+                            <small class="ml-3"></small>
+                            <div class="input-group-append">
+                                   <span class="input-group-text">
+                                  <i class="fa fa-eye"></i>
+                                 </span>
+                            </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>	
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button id="oPrijava" onclick="Prijava()" type="button" data-dismiss="modal" class="btn btn-primary mx-auto text-white w-25">Prijavi se</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- -------------------------------------------------------------------------------------------------------------------------- -->
+<button class="bg-danger" id="pocetna" title="Povratak na početak"><i class="fa fa-arrow-up text-white"></i></button>
 <div class="footer text-center text-warning bg-dark">
   <p>© Copyright 2021.</p>
 </div>
-    
     <script src="assets/plugins/angularjs/angular.min.js"></script>
     <script src="assets/plugins/angularjs/angular-route.min.js"></script>
     <script src="assets/plugins/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="assets/plugins/bootstrap-4.6.0-dist/js/bootstrap.min.js"></script>
     <script src="assets/plugins/fontawesome-free-5.15.3-web/js/fontawesome.min.js"></script>
+    <script src="assets/plugins/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="assets/plugins/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/plugins/Show-Hide-Passwords-Bootstrap-4/bootstrap-show-password.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/index.js"></script>
 </body>
