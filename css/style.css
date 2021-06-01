@@ -11,9 +11,10 @@ h1,h2,h3,h4,h5{
 
 .parallax {
   position: relative;
-  min-height: 300px; 
-  max-height: 400px;
+  min-height: 200px; 
+  max-height: 300px;
   margin: 0 auto;
+  margin-top: -3%;
 }
 button{
 	margin-right:5px !important;
@@ -48,11 +49,6 @@ span{
   cursor: pointer;
   text-align: center;
 }
-.odjava:hover{
-	background-color: rgb(104, 172, 211) !important;
-	transition: 0.3s !important;
-	cursor: pointer;
-}
 .row{
   height: 250px !important;
 }
@@ -73,8 +69,8 @@ span{
 /* #navbar{
   z-index:999 !important;
 } */
-.odjava{
-  z-index: 999 !important;
+#Odjava{
+  display: none;
 }
 @media (max-width:960px){
   .footer {
@@ -161,12 +157,12 @@ span{
 }
 
 .mainWrapper{
-  display: block;
+  display: inline-block;
   position: relative;
   top:0;
 }
 .tableContainer{
-  margin: 0% 10% 0%;
+  margin: 5% 10% 0%;
 }
 .mainWrapper::after{
   content: "";
@@ -197,9 +193,9 @@ span{
 } */
 .form-group small {
 	color: #e74c3c !important;
-	position: absolute !important;
-	bottom: 0 !important;
-	left: 0 !important ;
+	position: absolute ;
+	bottom: 0;
+	left: 0;
 	visibility: hidden !important;
 }
 .form-group.success input {
@@ -265,7 +261,115 @@ span{
   border: none;
   outline: none;
   cursor: pointer;
-  height: 6%;
-  padding: 15px;
   border-radius: 4px;
+}
+.navbar-brand{
+  font-weight: bold;
+  font-size: 22px;
+}
+.brand{
+  font-size: 32px;
+}
+#navbarBrand:hover {
+  box-shadow: 0 5px 35px 0px rgba(0,0,0,.1) !important;
+}
+
+#navbarBrand:hover::before, #navbarBrand:hover::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 105;
+  height: 44;
+  background: #FDA8CF !important;
+  border-radius: 75px;
+  z-index: -1;
+  animation: 1s clockwise infinite;
+}
+
+#navbarBrand:hover:after {
+  background: #F3CE5E !important;
+  animation: 2s counterclockwise infinite;
+}
+
+@keyframes clockwise {
+  0% {
+    top: -5px;
+    left: 0;
+  }
+  12% {
+    top: -2px;
+    left: 2px;
+  }
+  25% {
+    top: 0;
+    left: 5px;    
+  }
+  37% {
+    top: 2px;
+    left: 2px;
+  }
+  50% {
+    top: 5px;
+    left: 0;    
+  }
+  62% {
+    top: 2px;
+    left: -2px;
+  }
+  75% {
+    top: 0;
+    left: -5px;
+  }
+  87% {
+    top: -2px;
+    left: -2px;
+  }
+  100% {
+    top: -5px;
+    left: 0;    
+  }
+}
+
+@keyframes counterclockwise {
+  0% {
+    top: -5px;
+    right: 0;
+  }
+  12% {
+    top: -2px;
+    right: 2px;
+  }
+  25% {
+    top: 0;
+    right: 5px;    
+  }
+  37% {
+    top: 2px;
+    right: 2px;
+  }
+  50% {
+    top: 5px;
+    right: 0;    
+  }
+  62% {
+    top: 2px;
+    right: -2px;
+  }
+  75% {
+    top: 0;
+    right: -5px;
+  }
+  87% {
+    top: -2px;
+    right: -2px;
+  }
+  100% {
+    top: -5px;
+    right: 0;    
+  }
+}
+
+#LozinkaIIkona{
+  display: flex;
+  justify-content: space-between;
 }

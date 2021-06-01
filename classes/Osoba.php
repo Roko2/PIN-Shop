@@ -1,5 +1,5 @@
 <?php
-abstract class Osoba{
+class Osoba{
     public $m_nOib;
     public $m_sIme;
     public $m_sPrezime;
