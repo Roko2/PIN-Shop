@@ -4,16 +4,8 @@ include '../classes/Zaposlenik.php';
 header('Content-Type: text/html; charset=utf-8');
 header('Content-Type: application/x-www-form-urlencoded');
 ini_set('memory_limit', '2048M');
-        //     $sQuery="SELECT * FROM zaposlenik";
-        //    $oRecord = $oConnection->query($sQuery);
-        //    $vZaposlenici=array();
-        //    while($oRow = $oRecord->fetch(PDO::FETCH_BOTH))
-        //    {
-        //        $oZaposlenik=new Zaposlenik($oRow['OIB'],$oRow['Ime'],$oRow['Prezime'],$oRow['DatumRodjenja'],$oRow['Email'],$oRow['Placa'],$oRow['Uloga'],$oRow['GodinaStaza'],$oRow['Lozinka']);
-        //        array_push($vZaposlenici,$oZaposlenik);
-        //    }
-      $data = json_decode(file_get_contents('php://input'));
-      if(!empty($data->email) && !empty($data->lozinka))
+    $data = json_decode(file_get_contents('php://input'));
+    if(!empty($data->email) && !empty($data->lozinka))
            {
 //             $query = "INSERT INTO ". $this->TableName . " SET Ime=:name, Prezime=:surname, 
 //             GodinaRodenja=:birthDate, Spol=:gender, Email=:email, 
@@ -42,21 +34,19 @@ ini_set('memory_limit', '2048M');
 
 //    
 
-        $sQuery = 'SELECT * FROM zaposlenik WHERE Email=:email AND Lozinka=:lozinka';
+        $sQuery = 'SELECT * FROM zaposlenik WHERE Email=:email';
         $oStatement = $oConnection->prepare($sQuery);
         $oStatement->bindParam(":email", $data->email);
-        $oStatement->bindParam(":lozinka", $data->lozinka);
         $oStatement->execute();
         $oRow = $oStatement->fetch(PDO::FETCH_BOTH); 
-    if (!empty($oRow['Email']) && !empty($oRow['Lozinka']))
+    if (!empty($oRow['Email']) && password_verify($data->lozinka,$oRow['Lozinka']))
     {
-        $oOsoba=new Osoba($oRow['OIB'],$oRow['Ime'],$oRow['Prezime'],$oRow['DatumRodjenja']);
-        $oZaposlenik=new Zaposlenik($oRow['Email'],$oRow['Uloga'],$oRow['Placa'],$oRow['GodinaStaza'],$oRow['Lozinka'],$oOsoba);
+        $oZaposlenik=array('email'=>$oRow['Email'],'kljuc'=>$oRow['TajniKljuc']);
         echo(json_encode($oZaposlenik));
     }
     else
     {
-        echo NULL;
+        echo null;
     }
 }
 ?>

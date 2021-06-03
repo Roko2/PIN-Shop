@@ -21,7 +21,9 @@
     <header>
         <nav id="navbar" class="navbar navbar-expand-lg bg-secondary navbar-dark">
             <div class="container-fluid">
-            <a id="navbarBrand" class="navbar-brand p-1"><i class="fab fa-product-hunt brand"></i>CShop</a>
+            <a id="navbarBrand" onclick="PokaziPopup()" class="navbar-brand p-1 rounded">
+                <span class="popuptext" id="Popup">Dobrodošli u sustav PIN PCShop!</span>
+                <i class="fab fa-product-hunt brand"></i>CShop</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="smanjeniNavbar" aria-label="Toggle navigation" data-target="#smanjeniNavbar">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -38,15 +40,15 @@
              <div id="korisnik" class="navbar-nav nav-item">
                  <!-- <img src="img/cart.png" class="img mr-4"> -->
                  <span id="kosarica" class="bg-white"><i class="fa fa-shopping-cart ikonaKosarica mr-1" title="Košarica" aria-hidden="true"></i></span>
-                 <button id="Odjava" type="button" class="btn btn-primary text-white" ng-click="Odjava()">Odjava</button>
+                 <button id="Odjava" type="button" class="btn btn-primary text-white" title="Odjava" ng-click="Odjava()">Odjava</button>
                 </div>
             </div>
         </div>
            </nav>
     </header> 
     <!-- <div ng-view></div>    -->
-    <div class="mainWrapper">
-        <div class="tableContainer bg-secondary">
+    <div class="mainWrapper w-100">
+        <div class="tableContainer bg-secondary p-5 mb-5 rounded">
         <table id="tablicaArtikli" class="table table-hover table-bordered table-responsive text-white mx-auto text-center" width="100%">
           <thead>
             <tr>
@@ -136,56 +138,6 @@
 </div> 
     <div class="poguraj"></div>
 </div>
-
-<!-- Modal prijava --------------------------------------------------------------------------------->
-<div class="modal fade" id="modalPrijava" tabindex="-1" role="dialog" aria-labelledby="modalLozinka" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="title text-dark text-center">Prijava u sustav PIN PC Shop</h4>
-        </div>
-        <div class="modal-body">
-            <div class="jumbotron jumbotron-fluid login mb-5 w-100 mx-auto rounded" >
-                <div class="container">
-                        <form id="prijavaForma">
-                            <div class="row">
-                            <div class="col-sm-12 visina">	
-                        <div class="form-group">	
-                            <label class="font-weight-bold" for="inptEmail">Email adresa</label>
-                            <input type="text" class="form-control bg-white text-dark email" placeholder="Unesite Email adresu" name="email" id="inptEmail">
-                            <small></small>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 visina">
-                          <div class="form-group">
-                              <label class="font-weight-bold" for="inptLozinka">Lozinka</label>
-                              <div id="LozinkaIIkona" class="input-group">
-                            <input type="password" class="form-control bg-white text-dark" data-toggle="password" name="lozinka" placeholder="Lozinka..." id="inptLozinka">
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                               <i class="fa fa-eye"></i>
-                              </span>
-                         </div>
-                         <small class="ml-3 mt-4"></small>
-                              </div>
-                              
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>	
-        </div>
-        </div>
-        <div id="ucitavanjeIkona" class="mx-auto mb-3"></div>
-        <div class="modal-footer">
-            <button id="oPrijava" ng-click="Login()" class="btn btn-primary mx-auto text-white w-25">Prijavi se</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- -------------------------------------------------------------------------------------------------------------------------- -->
 <button class="btn btn-danger" id="pocetna" title="Povratak na početak"><i class="fa fa-arrow-up text-white"></i></button>
 <div class="footer text-center text-warning bg-dark">
   <p>© Copyright 2021.</p>
@@ -198,7 +150,6 @@
     <script src="assets/plugins/fontawesome-free-5.15.3-web/js/fontawesome.min.js"></script>
     <script src="assets/plugins/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="assets/plugins/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="assets/plugins/Show-Hide-Passwords-Bootstrap-4/bootstrap-show-password.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/index.js"></script>
 </body>

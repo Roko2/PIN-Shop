@@ -6,14 +6,16 @@ class Zaposlenik extends Osoba{
     public $m_fPlaca;
     public $m_nGodinaStaza;
     public $m_sLozinka;
+    public $m_sTajniKljuc;
 
-    public function __construct($email,$uloga,$placa,$godinaStaza,$lozinka,Osoba $objekt){
+    public function __construct($email,$uloga,$placa,$godinaStaza,$lozinka,$tajniKljuc,$oib,$ime,$prezime,$datumRodjenja){
         $this->m_sEmail=$email;
         $this->m_sUloga=$uloga;
         $this->m_fPlaca=$placa;
         $this->m_nGodinaStaza=$godinaStaza;
         $this->m_sLozinka=$lozinka;
-        parent::__construct($objekt->m_nOib,$objekt->m_sIme,$objekt->m_sPrezime,$objekt->m_nDatumRodjenja);
+        $this->m_sTajniKljuc=$tajniKljuc;
+        parent::__construct($oib,$ime,$prezime,$datumRodjenja);
     }
 }
 ?>

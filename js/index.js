@@ -26,7 +26,7 @@ $(window).on("load resize", function() {
 });
 
 var gumbPocetna = document.getElementById("pocetna");
-function scrollFunction() {
+function SkrolFunkcija() {
   if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
     gumbPocetna.style.display = "block";
   } else {
@@ -34,10 +34,14 @@ function scrollFunction() {
   }
 }
 
-  window.onscroll = function() {myFunction(),scrollFunction()};
+$('#pocetna').click(function(){
+  $('html, body').animate({scrollTop:0}, 'slow');
+});
+
+  window.onscroll = function() {StikiNavbar(),SkrolFunkcija()};
   var navbar = document.getElementById("navbar");
   var sticky = navbar.offsetTop;
-  function myFunction() {
+  function StikiNavbar() {
     if (window.pageYOffset >= sticky) {
       navbar.classList.add("sticky");
       $(".sadrzaj").css("padding-top","50px");
@@ -81,20 +85,13 @@ function scrollFunction() {
 //   }, 1000);
 
 $(document).ready(function(){
-  $("#modalPrijava").modal('show');
-  $("#modalPrijava").mouseleave(function(){
-    $("body").css("cursor", "not-allowed");
-  });
-  $("#modalPrijava").mouseenter(function(){
-    $("body").css("cursor", "default");
-  });
-  $("#oPrijava").click(function(){
-    $("#modalPrijava").off("mouseenter mouseleave");
-    $("body").css("cursor", "default");
-  });
-  $('#pocetna').on("click",function() {
-    $('html, body').animate({ scrollTop: 0 }, 'slow', function () {
-    });
+  if(localStorage.getItem("email")==null){
+    window.location.href="/PIN-Shop/prijava.html";
+  }
+  console.log(localStorage.getItem("email"));//dohvacanje
 });
 
-});
+function PokaziPopup() {
+    var popup = document.getElementById("Popup");
+    popup.classList.toggle("show");
+  }
