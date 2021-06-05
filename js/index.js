@@ -1,4 +1,4 @@
- 
+
 const $dropdown = $(".dropdown");
 const $dropdownToggle = $(".dropdown-toggle");
 const $dropdownMenu = $(".dropdown-menu");
@@ -53,19 +53,6 @@ $('#pocetna').click(function(){
 
   setTimeout(function () {
     $(function () {
-      $('#tablicaArtikli').DataTable({
-        // select: true,
-        scrollY: 500,
-        scrollX: "100%",
-        // deferRender: true,
-        //scrollY:     500,
-        // responsive: false,
-        // fixedHeader: {
-        //    header: true,
-        //    footer: true
-        // },
-        //  bAutoWidth: true,
-      }); 
       $("#navIcon1").attr("class","fa fa-microchip mr-1 text-white");
       $("#navIcon2").attr("class","fa fa-desktop mr-1 text-white");
       $("#navIcon3").attr("class","fa fa-print mr-1 text-white");
@@ -76,22 +63,35 @@ $('#pocetna').click(function(){
     });
   }, 100);
 
-//   setTimeout(function () {
-//     $(function () {
-//  var table = $('#tablicaArtikli').DataTable();
-//   table.columns.adjust();
-//     });
-    
-//   }, 1000);
-
 $(document).ready(function(){
-  if(localStorage.getItem("email")==null){
-    window.location.href="/PIN-Shop/prijava.html";
-  }
-  console.log(localStorage.getItem("email"));//dohvacanje
+  $("#vratiNaPocetnu").on('click',function(){
+    window.location.href="#!/";
+    const cartButtons = document.querySelectorAll('.cart-button');
+    cartButtons.forEach(button => {
+    button.addEventListener('click',cartClick);
+    })
+    function cartClick(){
+    let button =this;
+    button.classList.add('clicked');
+    }
+  });
+ 
+
+$("#kosarica").mouseenter(function(){
+  $("#cart").addClass("pomakniGumbBrojac");
 });
+
+$("#kosarica").mouseleave(function(){
+  $("#cart").removeClass("pomakniGumbBrojac");
+});
+});
+
+
 
 function PokaziPopup() {
     var popup = document.getElementById("Popup");
     popup.classList.toggle("show");
   }
+
+
+  

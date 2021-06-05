@@ -1,8 +1,48 @@
-<div>
-    <ul>
-    <li class="text-white">
-        da
-        </li>
-    </ul>
-   </div>
-   
+<div class="tableContainer bg-secondary p-5 mb-5 rounded ">
+    <table id="tablicaArtikli" class="table table-hover table-bordered table-responsive text-white mx-auto text-center w-100">
+      <thead>
+        <tr>
+            <th class="align-middle">Rbr</th>
+            <th class="align-middle">Naziv</th>
+            <th class="align-middle">Opis</th>
+            <th class="align-middle">Jedinica mjere</th>
+            <th class="align-middle">Cijena (HRK)</th>
+            <th class="align-middle">Kategorija</th>
+            <th class="align-middle">Stavljanje u košaricu</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="artikl in vArtikliPotkategorije track by artikl.m_nIdArtikla"> 
+            <td class="align-middle">{{$index+1}}</td>
+            <td class="align-middle">{{artikl.m_sNazivArtikla}}</td>
+            <td class="align-middle">{{artikl.m_sOpisArtikla}}</td>
+            <td class="align-middle">{{artikl.m_sJmjArtikla}}</td>
+            <td class="align-middle">{{artikl.m_fJdCijenaArtikla}}</td>
+            <td class="align-middle">{{artikl.m_nIdPotkategorijaArtikla}}</td>
+            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" data-target="#modalDodajArtikl" class="btn btn-danger text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+
+
+<div id="modalDodajArtikl" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Odabir količine</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>Količina artikla:</label>
+          <input type="number" value="1" min="1">
+        </div>
+        <div class="modal-footer">
+          <button ng-click="Kupi()" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+        </div>
+      </div>
+    </div>
+  </div>

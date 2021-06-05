@@ -34,19 +34,19 @@ ini_set('memory_limit', '2048M');
 
 //    
 
-        $sQuery = 'SELECT * FROM zaposlenik WHERE Email=:email';
-        $oStatement = $oConnection->prepare($sQuery);
-        $oStatement->bindParam(":email", $data->email);
-        $oStatement->execute();
-        $oRow = $oStatement->fetch(PDO::FETCH_BOTH); 
-    if (!empty($oRow['Email']) && password_verify($data->lozinka,$oRow['Lozinka']))
-    {
-        $oZaposlenik=array('email'=>$oRow['Email'],'kljuc'=>$oRow['TajniKljuc']);
-        echo(json_encode($oZaposlenik));
-    }
-    else
-    {
-        echo null;
-    }
+$sQuery = 'SELECT * FROM zaposlenik WHERE Email=:email';
+$oStatement = $oConnection->prepare($sQuery);
+$oStatement->bindParam(":email", $data->email);
+$oStatement->execute();
+$oRow = $oStatement->fetch(PDO::FETCH_BOTH); 
+if (!empty($oRow['Email']) && password_verify($data->lozinka,$oRow['Lozinka']))
+{
+    $oZaposlenik=array('email'=>$oRow['Email'],'kljuc'=>$oRow['TajniKljuc']);
+    echo(json_encode($oZaposlenik));
+}
+else
+{
+    echo null;
+}
 }
 ?>

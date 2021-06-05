@@ -142,3 +142,21 @@ margin-top: 3%;
         opacity: 0;
     }
 }
+
+.zoom {
+    position: absolute;
+    width: 40px;
+    opacity: 0;
+    animation: zoom 1s linear forwards;
+  }
+  
+@keyframes zoom {
+from {
+    opacity: 1;
+}
+to {
+    opacity: 0;
+    top: 40px;
+    right: 40px;
+}
+}

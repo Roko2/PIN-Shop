@@ -13,7 +13,7 @@ class Artikl{
         $this->m_sOpisArtikla=$opis;
         $this->m_sJmjArtikla=$jmj;
         $this->m_fJdCijenaArtikla=$jedCijena;
-        $this->m_nIdPotkategorije=$potkategorija;
+        $this->m_nIdPotkategorijaArtikla=$potkategorija;
     }
 }
 ?>
