@@ -41,15 +41,17 @@ $('#pocetna').click(function(){
   window.onscroll = function() {StikiNavbar(),SkrolFunkcija()};
   var navbar = document.getElementById("navbar");
   var sticky = navbar.offsetTop;
-  function StikiNavbar() {
-    if (window.pageYOffset >= sticky) {
-      navbar.classList.add("sticky");
-      $(".sadrzaj").css("padding-top","50px");
-    } else {
-      navbar.classList.remove("sticky");
-      $(".sadrzaj").css("padding-top","0px");
+  if (window.matchMedia('(min-width: 960px)').matches) {
+    function StikiNavbar() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky");
+        $(".sadrzaj").css("padding-top","50px");
+      } else {
+        navbar.classList.remove("sticky");
+        $(".sadrzaj").css("padding-top","0px");
+      }
     }
-  }
+}
 
   setTimeout(function () {
     $(function () {
@@ -64,6 +66,29 @@ $('#pocetna').click(function(){
   }, 100);
 
 $(document).ready(function(){
+  document.querySelector("#unosKolicine").addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+  });
+  $("#unosKolicine").keydown(function(){ 
+   if(!(/^[0-9]+$/g.test())){
+    $("#unosKolicine").keyup(function(){
+    var Unos=$("#unosKolicine").val();
+    //  console.log(Unos);
+    if(Number(Unos)<=0){
+      $("#kupiArtikl").attr("disabled", true);
+    }
+    else{
+      $("#kupiArtikl").attr("disabled", false);
+    }
+  });
+
+   }
+  });
+ 
+
   $("#vratiNaPocetnu").on('click',function(){
     window.location.href="#!/";
     const cartButtons = document.querySelectorAll('.cart-button');
@@ -86,12 +111,19 @@ $("#kosarica").mouseleave(function(){
 });
 });
 
-
-
 function PokaziPopup() {
     var popup = document.getElementById("Popup");
     popup.classList.toggle("show");
   }
 
+function ProsiriOpis(){
+  var prozor=document.getElementById("opisArtikla");
+  prozor.classList.toggle("show");
+}  
 
-  
+$(window).on('show.bs.modal', function() { 
+  $("body").css("overflow-y","hidden");
+});
+$(window).on('hide.bs.modal', function() { 
+  $("body").css("overflow-y","scroll");
+});

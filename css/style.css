@@ -66,9 +66,6 @@ span{
   text-decoration: none !important; 
   color:black !important;
 }
-/* #navbar{
-  z-index:999 !important;
-} */
 @media (max-width:960px){
   .footer {
     padding-top: 25% !important;
@@ -145,7 +142,9 @@ span{
 .fa:hover{
   cursor: pointer;
 }
-
+.fa-wrench{
+  font-size: 25px;
+}
 .mainWrapper{
   display: inline-block;
   position: relative;
@@ -153,7 +152,10 @@ span{
 }
 .tableContainer{
   margin: 5% 10% 0%;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   opacity: 0.9;
+  background-color:rgba(30, 32, 44, 0.95);
 }
 .mainWrapper::after{
   content: "";
@@ -171,22 +173,23 @@ span{
   z-index: -1;
 }
 
-#tablicaArtikli tr:hover{
-  color:lightblue;
-}
-/* #tablicaArtikli tbody{
-    display:block;
-    overflow:auto;
-    height:200px;
-}
+  /*
 
 #tablicaArtikli thead tr{
   display:block;
   text-align: center;
 } */
-/* #tablicaArtikli{
- margin-top: 50px;
-} */
+table,th,td {
+      border: 1px solid white;
+      border-collapse: collapse;
+}
+#opisArtikla{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width: 300px;
+  cursor: pointer;
+}
 
 #kosarica{
   width: 50px;
@@ -376,13 +379,7 @@ span{
   to {opacity:1 ;}
 }
 
-.pocetniContainer{
-  width: 250px;
-  height: 250px;
-  opacity: 0.9;
-}
-
-#gumbKupi{
+.gumbTablica{
     transition:all .08s linear;
     position:relative;
     outline:medium none;
@@ -390,17 +387,20 @@ span{
     margin-right:10px;
     margin-top:5px;
 }
-#gumbKupi:focus {
+.gumbTablica:focus {
   outline:medium none;
 }
-#gumbKupi:active {
+.gumbTablica:active {
   top:9px;
 }
 #gumbKupi {
   box-shadow:0 0 0 1px #c63702 inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #C24032, 0 8px 0 1px rgba(0,0,0,0.4), 0 8px 8px 1px rgba(0,0,0,0.5);
   background-color:#c63702;
 }
-
+#gumbAzuriraj{
+  box-shadow:0 0 0 1px #007bff inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #0255ad, 0 8px 0 1px rgba(0,0,0,0.4), 0 8px 8px 1px rgba(0,0,0,0.5);
+  background-color: #007bff;
+}
 .cart:before {
   content: attr(data-totalitems);
   font-size: 15px;
@@ -433,3 +433,32 @@ span{
   z-index: 999;
 } */
 
+.mycontent-left {
+  border-right: 1px dashed white;
+}
+.divider{
+  border-left:1px solid white;
+}
+/* .div1 {
+  width:200px;
+  height:200px;
+  background:white;
+  float: left;
+}
+
+.div2 {
+  width:200px;
+  height:200px;
+  background:white;
+  left: 50%;
+}
+.div3 {
+  width:200px;
+  height:200px;
+  background:white;
+  float: right;
+} */
+
+.pocetnaContainer{
+  opacity: 0.9;
+}

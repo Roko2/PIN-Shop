@@ -4,7 +4,7 @@ include '../classes/Artikl.php';
 header('Content-Type: text/html; charset=utf-8');
 ini_set('memory_limit', '2048M');
 $data=json_decode(file_get_contents('php://input'));
-$sQuery = "INSERT INTO  artikl SET Naziv=:naziv, Opis=:opis, Jmj=:jmj, JdCijena=:jdCijena, IdPotaktegorije=:potkategorija";
+$sQuery = "INSERT INTO  artikl SET Naziv=:naziv, Opis=:opis, Jmj=:jmj, JdCijena=:jdCijena, IdPotkategorije=:potkategorija";
 $oStatement = $oConnection->prepare($sQuery);
 
 $data->m_sNazivArtikla = htmlspecialchars(strip_tags($data->m_sNazivArtikla));
@@ -19,5 +19,6 @@ $oStatement->bindParam(":jmj", $data->m_sJmjArtikla);
 $oStatement->bindParam(":jdCijena", $data->m_fJdCijenaArtikla);
 $oStatement->bindParam(":potkategorija", $data->m_nIdPotkategorijaArtikla);
 
-$oStatement->execute();
+ $oStatement->execute();
+
 ?>

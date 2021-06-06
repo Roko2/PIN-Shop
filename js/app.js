@@ -28,7 +28,11 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.vKategorije = [];
     $scope.vArtikli=[];
     $scope.oZaposlenik;
+    $scope.opisArtikla;
     $scope.vArtikliPotkategorije=[];
+    $scope.OpisArtikla=function(opis){
+      $scope.opisArtikla=opis;
+    }
     brojUlaza=0;
     $scope.Kupi=function()
     {
@@ -53,7 +57,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
         setTimeout(function(){
         $('#tablicaArtikli').DataTable({
               width:"100%",
-              scrollY: 500,
+              scrollY: 400,
               scrollX: "100%"
             }); 
         },100);
