@@ -66,29 +66,6 @@ $('#pocetna').click(function(){
   }, 100);
 
 $(document).ready(function(){
-  document.querySelector("#unosKolicine").addEventListener("keypress", function (evt) {
-    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
-    {
-        evt.preventDefault();
-    }
-  });
-  $("#unosKolicine").keydown(function(){ 
-   if(!(/^[0-9]+$/g.test())){
-    $("#unosKolicine").keyup(function(){
-    var Unos=$("#unosKolicine").val();
-    //  console.log(Unos);
-    if(Number(Unos)<=0){
-      $("#kupiArtikl").attr("disabled", true);
-    }
-    else{
-      $("#kupiArtikl").attr("disabled", false);
-    }
-  });
-
-   }
-  });
- 
-
   $("#vratiNaPocetnu").on('click',function(){
     window.location.href="#!/";
     const cartButtons = document.querySelectorAll('.cart-button');

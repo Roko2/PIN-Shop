@@ -19,6 +19,6 @@ $oStatement->bindParam(":jmj", $data->m_sJmjArtikla);
 $oStatement->bindParam(":jdCijena", $data->m_fJdCijenaArtikla);
 $oStatement->bindParam(":potkategorija", $data->m_nIdPotkategorijaArtikla);
 
- $oStatement->execute();
+$oStatement->execute();
 
 ?>

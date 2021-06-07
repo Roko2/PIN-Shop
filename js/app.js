@@ -12,24 +12,21 @@ pcShop.config(function($routeProvider){
    });
    });
 
-//Dohvacanje podataka sa forme preko PHP-a
-function getFormData($form){
-  var bezindexPolje = $form.serializeArray();
-  var indeksiranoPolje = {};
-
-  $.map(bezindexPolje, function(n, i){
-    indeksiranoPolje[n['name']] = n['value'];
-  });
-
-  return indeksiranoPolje;
-}
-
 pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.vKategorije = [];
     $scope.vArtikli=[];
     $scope.oZaposlenik;
     $scope.opisArtikla;
     $scope.vArtikliPotkategorije=[];
+    $scope.kolicina=1;
+    $scope.UgasiGumb=function(value){
+      if(Number(value)<=0){
+        $("#kupiArtikl").attr("disabled", true);
+      }
+      else{
+        $("#kupiArtikl").attr("disabled", false);
+      }
+    }
     $scope.OpisArtikla=function(opis){
       $scope.opisArtikla=opis;
     }
@@ -91,6 +88,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
       localStorage.removeItem("email");
       localStorage.removeItem("kljuc");
       $window.location.href='/PIN-Shop/prijava.html';
+      Cache.delete();
     }
     $q.all([
         $http.get("./query/kategorije.php"),

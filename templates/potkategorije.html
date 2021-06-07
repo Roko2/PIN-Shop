@@ -39,7 +39,7 @@
         </div>
         <div class="modal-body">
           <label>Količina artikla:</label>
-          <input id="unosKolicine" type="number" value="1" min="1">
+          <input id="unosKolicine" type="number" ng-model="kolicina" ng-keyup="UgasiGumb(kolicina)" max="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <div class="modal-footer">
           <button ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
