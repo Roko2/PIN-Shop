@@ -378,27 +378,62 @@ table,th,td {
   to {opacity:1 ;}
 }
 
-.gumbTablica{
-    transition:all .08s linear;
-    position:relative;
-    outline:medium none;
-    border:0px;
-    margin-right:10px;
-    margin-top:5px;
+.gumbTablica#gumbKupi:active,
+.gumbTablica#gumbKupi.active {
+  box-shadow: 0 0 0 1px #5cb85c inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	background-color: #5cb85c;	
 }
+.gumbTablica {
+	position: relative;
+	top: -6px;
+	border: 0;
+	transition: all 40ms linear;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.gumbTablica#gumbKupi {
+	box-shadow: 0 0 0 1px #5cb85c inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #5eb924, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+	background-color: #5cb85c;
+}
+
+.gumbTablica:active,
+.gumbTablica.active {
+	top: 2px !important;
+}
+
+.gumbTablica:active:focus,
+.gumbTablica:focus:hover,
 .gumbTablica:focus {
-  outline:medium none;
+	outline: medium none !important;
 }
-.gumbTablica:active {
-  top:9px;
+
+.gumbTablica#gumbObrisi {
+	box-shadow: 0 0 0 1px #b93802 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #AA0000, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+	background-color: #D73814;
 }
-#gumbKupi {
-  box-shadow:0 0 0 1px #c63702 inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #C24032, 0 8px 0 1px rgba(0,0,0,0.4), 0 8px 8px 1px rgba(0,0,0,0.5);
-  background-color:#c63702;
+
+.gumbTablica#gumbObrisi:active,
+.gumbTablica#gumbObrisi.active {
+	box-shadow: 0 0 0 1px #b93802 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	background-color: #D73814;
 }
-#gumbAzuriraj{
-  box-shadow:0 0 0 1px #007bff inset, 0 0 0 2px rgba(255,255,255,0.15) inset, 0 8px 0 0 #0255ad, 0 8px 0 1px rgba(0,0,0,0.4), 0 8px 8px 1px rgba(0,0,0,0.5);
-  background-color: #007bff;
+
+.gumbTablica#gumbAzuriraj {
+	box-shadow: 0 0 0 1px #417fbd inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #4D5BBE, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+	background-color: #4274D7;
+}
+
+.gumbTablica#gumbAzuriraj:active,
+.gumbTablica#gumbAzuriraj.active {
+	box-shadow: 0 0 0 1px #417fbd inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	background-color: #4274D7;
+}
+
+#gumbObrisi{
+  font-size: 20px;
 }
 .cart:before {
   content: attr(data-totalitems);
@@ -424,13 +459,6 @@ table,th,td {
   width: 450px;
   height: 250px;
 }
-
-/* .pomakniGumbBrojac{
-  transform: translateY(-5px);
-  transition: transform 0.5s;
-  margin:0 -66px;
-  z-index: 999;
-} */
 
 .mycontent-left {
   border-right: 1px dashed white;

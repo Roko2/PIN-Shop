@@ -66,6 +66,10 @@ $('#pocetna').click(function(){
   }, 100);
 
 $(document).ready(function(){
+  var datum=new Date();
+  var trenutnaGodina=datum.getFullYear();
+  var row="<b>© Copyright "+trenutnaGodina+"</b>";
+  $("#copyright").append(row);
   $("#vratiNaPocetnu").on('click',function(){
     window.location.href="#!/";
     const cartButtons = document.querySelectorAll('.cart-button');

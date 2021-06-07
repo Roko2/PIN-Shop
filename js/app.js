@@ -17,10 +17,13 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.vArtikli=[];
     $scope.oZaposlenik;
     $scope.opisArtikla;
+    $scope.kategorijaArtikla;
     $scope.vArtikliPotkategorije=[];
     $scope.kolicina=1;
-    $scope.UgasiGumb=function(value){
-      if(Number(value)<=0){
+    $scope.kvantitetaArtikla;
+    $scope.UgasiGumb=function(){
+      $scope.kolicina=$("#unosKolicine").val();
+      if($scope.kolicina<=0){
         $("#kupiArtikl").attr("disabled", true);
       }
       else{
@@ -29,6 +32,9 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     }
     $scope.OpisArtikla=function(opis){
       $scope.opisArtikla=opis;
+    }
+    $scope.KvantitetaArtikla=function(kvantiteta){
+      $scope.kvantitetaArtikla=kvantiteta;
     }
     brojUlaza=0;
     $scope.Kupi=function()
@@ -50,6 +56,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
           $("#tablicaArtikli").DataTable().rows().remove();
         }
         $scope.vArtikliPotkategorije=response.data;
+        $scope.kategorijaArtikla=response.data[0].m_nIdPotkategorijaArtikla;
         if(brojUlaza==0){
         setTimeout(function(){
         $('#tablicaArtikli').DataTable({

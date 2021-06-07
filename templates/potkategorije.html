@@ -1,15 +1,16 @@
 <div class="tableContainer p-5 mb-5 rounded ">
+  <h3 class="mx-auto text-white text-center" ng-model="kategorijaArtikla">{{kategorijaArtikla}}</h3>
     <table id="tablicaArtikli" class="table table-bordered table-responsive mx-auto text-white text-center w-100">
       <thead>
         <tr>
             <th class="align-middle">Rbr</th>
             <th class="align-middle">Naziv</th>
             <th class="align-middle">Opis</th>
-            <th class="align-middle">Jedinica mjere</th>
+            <th class="align-middle">Dostupna količina</th>
             <th class="align-middle">Cijena (HRK)</th>
-            <th class="align-middle">Kategorija</th>
             <th class="align-middle">Stavljanje u košaricu</th>
             <th class="align-middle">Ažuriranje</th>
+            <th class="align-middle">Brisanje</th>
         </tr>
     </thead>
     <tbody>
@@ -17,12 +18,12 @@
             <td class="align-middle">{{$index+1}}</td>
             <td class="align-middle">{{artikl.m_sNazivArtikla}}</td>
             <td class="align-middle" data-toggle="modal" data-target="#modalDetalji" ng-click="OpisArtikla(artikl.m_sOpisArtikla)" title="Kliknite za detalje" id="opisArtikla">{{artikl.m_sOpisArtikla}}</td>
-            <td class="align-middle">{{artikl.m_sJmjArtikla}}</td>
+            <td class="align-middle">{{artikl.m_nKvantitetaArtikla}} {{artikl.m_sJmjArtikla}}</td>
             <td class="align-middle">{{artikl.m_fJdCijenaArtikla}}</td>
-            <td class="align-middle">{{artikl.m_nIdPotkategorijaArtikla}}</td>
-            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" data-target="#modalDodajArtikl" class="btn btn-danger gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
+            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" ng-click="KvantitetaArtikla(artikl.m_nKvantitetaArtikla)"  data-target="#modalDodajArtikl" class="btn btn-success gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
             <td class="align-middle"><button id="gumbAzuriraj" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-wrench d-inline mr-1" aria-hidden="true"></i></button></td>
-        </tr>
+            <td class="align-middle"><button id="gumbObrisi" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+          </tr>
     </tbody>
     </table>
 </div>
@@ -39,7 +40,7 @@
         </div>
         <div class="modal-body">
           <label>Količina artikla:</label>
-          <input id="unosKolicine" type="number" ng-model="kolicina" ng-keyup="UgasiGumb(kolicina)" max="5" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+          <input id="unosKolicine" type="number" ng-model="kolicina" max="{{kvantitetaArtikla}}" ng-change="UgasiGumb()" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <div class="modal-footer">
           <button ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
