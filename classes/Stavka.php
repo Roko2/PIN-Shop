@@ -1,4 +1,6 @@
 <?php
+// include "../path_helper.php";
+// include (ROOT ."\\classes\\Artikl.php");
 include './Artikl.php';
 class Stavka extends Artikl{
     public $m_nIdStavke;

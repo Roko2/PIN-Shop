@@ -2,7 +2,12 @@
 include '../database/connection.php';
 include '../classes/Category.php';
 include '../classes/SubCategory.php';
+// include "../path_helper.php";
+// include (ROOT ."\\database\\connection.php");
+// include (ROOT ."\\classes\\Category.php");
+// include (ROOT ."\\classes\\SubCategory.php");
 header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');
     $sQuery2="SELECT * FROM potkategorije";
     $oRecord2 = $oConnection->query($sQuery2);

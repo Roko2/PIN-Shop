@@ -22,7 +22,7 @@
             <td class="align-middle">{{artikl.m_fJdCijenaArtikla}}</td>
             <td class="align-middle"><button id="gumbKupi" data-toggle="modal" ng-click="KvantitetaArtikla(artikl.m_nKvantitetaArtikla)"  data-target="#modalDodajArtikl" class="btn btn-success gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
             <td class="align-middle"><button id="gumbAzuriraj" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-wrench d-inline mr-1" aria-hidden="true"></i></button></td>
-            <td class="align-middle"><button id="gumbObrisi" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+            <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiArtikl(artikl.m_nIdArtikla,artikl.m_sNazivArtikla)" data-toggle="modal" data-target="#modalObrisi" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
           </tr>
     </tbody>
     </table>
@@ -40,7 +40,7 @@
         </div>
         <div class="modal-body">
           <label>Količina artikla:</label>
-          <input id="unosKolicine" type="number" ng-model="kolicina" max="{{kvantitetaArtikla}}" ng-change="UgasiGumb()" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+          <input id="unosKolicine" type="number" ng-model="oKolicina.vrijednost" min="1" max="{{kvantitetaArtikla}}" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <div class="modal-footer">
           <button ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
@@ -65,3 +65,24 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="modalObrisi" tabindex="-1" role="dialog" aria-labelledby="modalObrisi" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-warning my-auto" id="modalObrisi">Brisanje artikla</h5>
+          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+    <p class="text-center text-dark mt-2 h4">Jeste li sigurni da želite obrisati artikl?</p><br>
+    <div class="text-center font-weight-bold">{{artiklObrisi.sNazivArtikla}}</div>
+  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="Brisanje(artiklObrisi.nIdArtikla)">Obriši</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+        </div>
+      </div>
+    </div>
+</div>

@@ -2,7 +2,7 @@
 body{
   font-family: 'Open Sans',sans-serif;
  margin: 0 !important;
- height:  100% !important;
+ min-height:  100% !important;
 	/*boje->crna #000000, zuta #FCA311,tamno plavija #14213D,platina #E5E5E5,bijela #FFFFFF*/
 }
 h1,h2,h3,h4,h5{
@@ -61,11 +61,23 @@ span{
   transform: translate(-50%, -50%);
   text-shadow: 1px 1px 1px black;
 }
-.odjaviSe{
-  font-size: 15px !important;
-  text-decoration: none !important; 
-  color:black !important;
+#Odjava {
+  background-image: linear-gradient(to right, #00d2ff 0%, #3a7bd5  51%, #00d2ff  100%);
+  text-align: center;
+  margin-top:4px;
+  margin-bottom: 4px;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;         
+  border-radius: 10px;
+  display: block;
 }
+#Odjava:hover {
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+
 @media (max-width:960px){
   .footer {
     padding-top: 25% !important;
@@ -87,6 +99,7 @@ span{
 .poguraj {
   height: 40px !important;
 }
+
 #korisnik{
  margin-left: auto;
 }
@@ -485,6 +498,9 @@ table,th,td {
   background:white;
   float: right;
 } */
+#visinaRetka{
+  height: 100% !important;
+}
 
 .pocetnaContainer{
   opacity: 0.9;
@@ -493,4 +509,49 @@ table,th,td {
 #LogoSlika{
   width: 70%;
   border-radius: 10px;
+}
+
+
+#opisArtikla,
+#opisArtikla::after {
+  transition: all 0.3s;
+}
+
+
+#opisArtikla::before,
+#opisArtikla::after {
+  background: #fff;
+  content: '';
+  position: absolute;
+  z-index: -999;
+}
+
+#opisArtikla:hover {
+  color: black;
+  font-weight: bold;
+}
+
+#opisArtikla {
+  overflow: hidden ;
+}
+
+#opisArtikla::after {
+  /*background-color: #f00;*/
+  height: 100%;
+  left: -100%;
+  top: 0;
+  transform: skew(50deg);
+  transition-duration: 0.6s;
+  transform-origin: top left;
+  width: 0;
+}
+
+#opisArtikla:hover:after {
+  height: 160%;
+  width: 200%;
+}
+
+#opisArtikla {
+  background: none;
+  position: relative;
 }

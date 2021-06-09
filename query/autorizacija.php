@@ -1,5 +1,8 @@
 <?php
     include '../database/connection.php';
+    // include "../path_helper.php";
+    // include (ROOT ."\\database\\connection.php");
+
     header('Content-Type: text/html; charset=utf-8');
     header('Content-Type: application/json');
     ini_set('memory_limit', '2048M');

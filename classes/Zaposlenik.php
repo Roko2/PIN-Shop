@@ -1,4 +1,6 @@
 <?php
+// include "../path_helper.php";
+// include (ROOT ."\\classes\\Osoba.php");
 include 'Osoba.php';
 class Zaposlenik extends Osoba{
     public $m_sEmail;

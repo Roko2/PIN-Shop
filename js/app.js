@@ -17,18 +17,31 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.vArtikli=[];
     $scope.oZaposlenik;
     $scope.opisArtikla;
+    $scope.slucajnaSlika;
     $scope.kategorijaArtikla;
     $scope.vArtikliPotkategorije=[];
-    $scope.kolicina=1;
+    $scope.oKolicina={vrijednost:1};
     $scope.kvantitetaArtikla;
-    $scope.UgasiGumb=function(){
-      $scope.kolicina=$("#unosKolicine").val();
-      if($scope.kolicina<=0){
-        $("#kupiArtikl").attr("disabled", true);
-      }
-      else{
-        $("#kupiArtikl").attr("disabled", false);
-      }
+    $scope.artiklObrisi={nIdArtikla:null,sNazivArtikla:null};
+    $scope.Brisanje=function(idArtiklaBrisanje){
+      oArtiklObrisi={idArtikla:idArtiklaBrisanje};
+      console.log(JSON.stringify(oArtiklObrisi));
+      $http({
+        url: "./crud/Artikl/delete.php",
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        data: JSON.stringify(oArtiklObrisi)
+      }).then(function(response){
+       console.log($window.localStorage.getItem("potkategorija"));
+      $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));
+       
+      }),function(response){
+        console.log(response);
+      };
+    }
+    $scope.ObrisiArtikl=function(idArtikla,nazivArtikla){
+      $scope.artiklObrisi={nIdArtikla:idArtikla,sNazivArtikla:nazivArtikla};
+      console.log(kategorijaArtikla);
     }
     $scope.OpisArtikla=function(opis){
       $scope.opisArtikla=opis;
@@ -43,6 +56,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
       var cartTotal = cart.attr('data-totalitems');
       var newCartTotal = parseInt(cartTotal) + 1;
       cart.attr('data-totalitems',newCartTotal);
+      $scope.oKolicina={vrijednost:1};
     };
     $scope.PosaljiIdPotkategorije=function(idPotkategorije){
     oPotkategorija={potkategorijaID:idPotkategorije};
@@ -67,6 +81,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
         },100);
         brojUlaza++; 
       }
+      $window.localStorage.setItem("potkategorija",idPotkategorije);
       }),function(response){
       };
     }
@@ -75,7 +90,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
         $window.location.href='/PIN-Shop/prijava.html';
         return;
       }
-      oLocalStorage={email:$window.localStorage.getItem("email"),kljuc:localStorage.getItem("kljuc")};
+      oLocalStorage={email:$window.localStorage.getItem("email"),kljuc:$window.localStorage.getItem("kljuc")};
       $http({
         url: "./query/autorizacija.php",
         method: "POST",
@@ -83,8 +98,10 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
         data: JSON.stringify(oLocalStorage)
       }).then(function(response){
         if(response.data===0){
-          localStorage.removeItem("email");
-          localStorage.removeItem("kljuc");
+          $window.localStorage.removeItem("email");
+          $window.localStorage.removeItem("kljuc");
+          $window.localStorage.removeItem("potkategorija");
+          $window.localStorage.removeItem("spol");
           $window.location.href='/PIN-Shop/prijava.html';
         }
       }),function(response){
@@ -92,18 +109,22 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
       };
     }
     $scope.Odjava=function(){
-      localStorage.removeItem("email");
-      localStorage.removeItem("kljuc");
+      $window.localStorage.removeItem("email");
+      $window.localStorage.removeItem("kljuc");
+      $window.localStorage.removeItem("potkategorija");
+      $window.localStorage.removeItem("spol");
       $window.location.href='/PIN-Shop/prijava.html';
       Cache.delete();
     }
     $q.all([
         $http.get("./query/kategorije.php"),
-        $http.get("./query/artikli.php")
+        $http.get("./query/artikli.php"),
+        $http.get("https://randomuser.me/api/?gender="+$window.localStorage.getItem("spol")+"&inc=picture&noinfo")
       ]).then(function(results) {
           $scope.vKategorije=results[0].data;
           $scope.vArtikli=results[1].data;
+          $scope.slucajnaSlika=results[2].data.results[0].picture.large;
         //   $scope.oZaposlenik=results[2].data;
-        //     console.log(results[2].data);
+             
       });
 });

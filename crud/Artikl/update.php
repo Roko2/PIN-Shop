@@ -2,6 +2,7 @@
 include '../database/connection.php';
 include '../classes/Artikl.php';
 header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');
 $data=json_decode(file_get_contents('php://input'));
 $sQuery = "UPDATE artikl SET Naziv=:naziv, Opis=:opis, Jmj=:jmj, JdCijena=:jdCijena, IdPotkategorije=:potkategorija WHERE ID=:idArtikla";
