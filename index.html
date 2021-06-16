@@ -16,12 +16,12 @@
         <div class="sadrzaj">
         <div class="parallax">
            <center><img id="slikaAnim" src="img/animation_img.png"></center>
-            <h1 class="naslov text-center text-white my-auto"><img id="LogoSlika" class="mt-2" src="img/slika.png"></h1>
+            <h1 class="naslov text-center text-white my-auto"><img id="LogoSlika" class="mt-4" src="img/slika.png"></h1>
     </div>  
     <header>
         <nav id="navbar" class="navbar navbar-expand-lg bg-secondary navbar-dark">
             <div class="container-fluid">
-            <a id="navbarBrand" href="#!/" onclick="PokaziPopup()" class="navbar-brand p-1 rounded">
+            <a id="navbarBrand" href="#!/" onclick="PokaziPopup()" class="navbar-brand p-1 rounded" title="Početna">
                 <span class="popuptext" id="Popup">Dobrodošli u sustav PIN PCShop!</span>
                 <i class="fab fa-product-hunt brand"></i>CShop</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="smanjeniNavbar" aria-label="Toggle navigation" data-target="#smanjeniNavbar">
@@ -38,9 +38,13 @@
          </ul>
 
              <div id="korisnik" class="navbar-nav nav-item">
-                 <!-- <img src="img/cart.png" class="img mr-4"> -->
+                <a class="button my-auto" href="#!/noviArtikl" title="Dodavanje novog artikla">
+                    Novi artikl
+                    <div class="button__horizontal"></div>
+                    <div class="button__vertical"></div>
+                </a>
                  <div id="cart" class="cart" data-totalitems="0"></div>
-                 <div id="kosarica" class="bg-white"><i class="fa fa-shopping-cart ikonaKosarica mr-1" title="Košarica" aria-hidden="true"></i></div>
+                 <div id="kosarica" class="bg-white" ng-click="OtvoriModalRacun()"><i class="fa fa-shopping-cart ikonaKosarica mr-1" title="Košarica" aria-hidden="true"></i></div>
                  <button id="Odjava" type="button" class="btn btn-primary text-white" title="Odjava" ng-click="Odjava()">Odjava</button>
                 </div>
             </div>
@@ -60,6 +64,37 @@
   <p id="copyright"></p>
 </div>
 
+<!------------------------------------------MODAL RAČUN --------------------------------------------------- -->
+<div class="modal fade" id="modalRacun" tabindex="-1" role="dialog" aria-labelledby="modalRacun" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-warning my-auto" id="modalRacun">Račun</h5>
+          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body font-weight-bold">
+          <table>
+            <thead>
+              <tr>
+                <th>Rbr</th>
+                <th>Naziv stavke</th>
+                <th>Količina</th>
+                <th>Cijena</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mr-auto">Ukupna cijena: </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.5.js"></script> -->
     <script src="assets/plugins/angularjs/angular.min.js"></script>
     <script src="assets/plugins/angularjs/angular-route.min.js"></script>
     <script src="assets/plugins/node_modules/jquery/dist/jquery.min.js"></script>
@@ -68,6 +103,7 @@
     <script src="assets/plugins/fontawesome-free-5.15.3-web/js/fontawesome.min.js"></script>
     <script src="assets/plugins/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="assets/plugins/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.5.js"></script>
     <script src="js/app.js"></script>
     <script src="js/index.js"></script>
 </body>

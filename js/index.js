@@ -5,8 +5,9 @@ const $dropdownMenu = $(".dropdown-menu");
 const showClass = "collapse show";
 
 $(window).on("load resize", function() {
-  if (this.matchMedia("(min-width: 768px)").matches) {
-    $(".dropdown").hover(
+  if (window.matchMedia("(min-width: 768px)").matches) {
+     setTimeout(function(){
+        $(".dropdown").hover(
       function() {
         const $this = $(this);
         $this.addClass(showClass);
@@ -18,9 +19,12 @@ $(window).on("load resize", function() {
         $this.removeClass(showClass);
         $this.find($(".dropdown-toggle")).attr("aria-expanded", "false");
         $this.find($(".dropdown-menu")).removeClass(showClass);
-      }
+      } 
     );
-  } else {
+     },200);
+    
+  } 
+else {
     $dropdown.off("mouseenter mouseleave");
   }
 });
@@ -66,6 +70,7 @@ $('#pocetna').click(function(){
   }, 100);
 
 $(document).ready(function(){
+
   var datum=new Date();
   var trenutnaGodina=datum.getFullYear();
   var row="<b>© Copyright "+trenutnaGodina+"</b>";
@@ -104,7 +109,12 @@ function ProsiriOpis(){
 
 $(window).on('show.bs.modal', function() { 
   $("body").css("overflow-y","hidden");
+  $("#unosKolicine").val(1);
 });
 $(window).on('hide.bs.modal', function() { 
   $("body").css("overflow-y","scroll");
+  setTimeout(function(){
+  $("#unosKolicine").val(1);
+  },300);
+  
 });

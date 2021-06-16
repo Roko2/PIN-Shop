@@ -34,7 +34,6 @@ $scope.Login=function(){
             setTimeout(function () {
                  $window.localStorage.setItem("email",response.data.email);
                  $window.localStorage.setItem("kljuc",response.data.kljuc);
-                 $window.localStorage.setItem("spol",response.data.spol==="1" ? "female":"male");
                  $window.location.href ='/PIN-Shop/index.html';
             }, 2000);
         }

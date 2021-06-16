@@ -1,0 +1,66 @@
+<div class="container noviArtikl rounded text-white font-weight-bold text-left mx-auto m-5 w-75 h-50">
+    <form id="dodavanjeArtikla">
+        <h3 class="text-center pt-1">Dodavanje novog artikla</h3>
+            <div class="form-group">
+              <label for="dodajNazivArtikla">Naziv</label>
+              <input type="text" class="form-control" id="dodajNazivArtikla" name="nazivArtikla">
+            </div>
+            <div class="form-group">
+              <label for="dodajOpisArtikla">Opis</label>
+              <textarea  id="dodajOpisArtikla" class="form-control" name="opisArtikla" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="dodajKolicinaArtikl">Količina</label>
+              <input type="number" id="dodajKolicinaArtikl" class="form-control w-25" name="kolicinaArtikla">
+            </div>
+            <div class="form-group">
+              <label for="dodajCijenaArtikla">Cijena (HRK)</label>
+              <input type="text" id="dodajCijenaArtikla" class="form-control w-25" name="cijenaArtikla">
+            </div>
+            <div class="form-group">
+                <label for="dodajJmjArtikla">Jedinica mjere</label>
+                <input type="text" id="dodajJmjArtikla" class="form-control w-25" name="jedinicaMjereArtikla">
+              </div>
+            <div class="form-group">
+              <label for="odabirKategorije">Odabir kategorije</label>
+              <select class="form-control" id="odabirKategorije" name="kategorijaArtikla" ng-model="novaKategorijaArtikla" ng-options="oPotkategorija.m_sNaziv for oPotkategorija in vPotkategorije track by oPotkategorija.m_nId">
+                <option value="">--Odaberite kategoriju artikla--</option>
+              </select>
+            </div>
+            <div class="mt-3 pb-1 text-center">
+            <button class="btn btn-primary w-25" ng-click="DodajArtikl()">Dodaj artikl</button>
+      </div>
+    </form>
+ </div>
+
+ 
+<!------------------------------------------MODAL RAČUN --------------------------------------------------- -->
+<div class="modal fade" id="modalRacun" tabindex="-1" role="dialog" aria-labelledby="modalRacun" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title text-warning my-auto" id="modalRacun">Račun</h5>
+        <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+          <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body font-weight-bold">
+        <table>
+          <thead>
+            <tr>
+              <th>Rbr</th>
+              <th>Naziv stavke</th>
+              <th>Količina</th>
+              <th>Cijena</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mr-auto">Ukupna cijena: </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,13 +6,12 @@ class Stavka extends Artikl{
     public $m_nIdStavke;
     public $m_fUkCijena;
     public $m_nKolicina;
-    public $m_nIdArtikla;
 
-    public function __construct($id,$ukCijena,$kolicina,$idArtikl){
-        $this->m_nIdStavke=$id;
+    public function __construct($idStavke,$ukCijena,$kolicina,$id,$naziv,$opis,$jmj,$jedCijena,$kvantiteta,$potkategorija){
+        $this->m_nIdStavke=$idStavke;
         $this->m_fUkCijena=$ukCijena;
         $this->m_nKolicina=$kolicina;
-        $this->m_nIdArtikla=$idArtikl;
+        parent::__construct($id,$naziv,$opis,$jmj,$jedCijena,$kvantiteta,$potkategorija);
     }
 }
 ?>

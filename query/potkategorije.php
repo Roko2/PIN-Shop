@@ -1,24 +1,20 @@
 <?php
 include '../database/connection.php';
-include '../classes/Artikl.php';
-
+include '../classes/SubCategory.php';
 // include "../path_helper.php";
 // include (ROOT ."\\database\\connection.php");
-// include (ROOT ."\\classes\\Artikl.php");
-header('Content-Type:text/html; charset=utf-8');
+// include (ROOT ."\\classes\\Category.php");
+// include (ROOT ."\\classes\\SubCategory.php");
+header('Content-Type: text/html; charset=utf-8');
 header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');
-
-$data=json_decode(file_get_contents('php://input')); 
-$sQuery="SELECT ID,Naziv,Opis,Jmj,Kvantiteta,JdCijena,NazivPotkategorije FROM artikl INNER JOIN potkategorije on artikl.IdPotkategorije=potkategorije.IDpotkategorije WHERE artikl.IdPotkategorije=:potkategorija";
-$oStatement = $oConnection->prepare($sQuery);
-$oStatement->bindParam(':potkategorija',$data->potkategorijaID);
-$oStatement->execute();
-$vArtikliPotkategorije=array();
-while($oRow = $oStatement->fetch(PDO::FETCH_BOTH))
+    $sQuery="SELECT * FROM potkategorije";
+    $oRecord = $oConnection->query($sQuery);
+    $vPotkategorije=array();
+    while($oRow = $oRecord->fetch(PDO::FETCH_BOTH))
     {
-        $oArtikl=new Artikl($oRow['ID'],$oRow['Naziv'],$oRow['Opis'],$oRow['Jmj'],$oRow['JdCijena'],$oRow['Kvantiteta'],$oRow['NazivPotkategorije']);
-        array_push($vArtikliPotkategorije,$oArtikl);
+        $potkategorija=new podKategorija($oRow['IDPotkategorije'],$oRow['NazivPotkategorije'],$oRow['KategorijaID']);
+        array_push($vPotkategorije,$potkategorija);
     }
-     echo json_encode($vArtikliPotkategorije);
-?>
+echo json_encode($vPotkategorije);
+    ?>

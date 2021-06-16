@@ -1,10 +1,48 @@
-<div class="container pocetnaContainer rounded bg-success text-white text-center mx-auto m-5 w-75">
+<div class="container pocetnaContainer rounded text-white text-center mx-auto m-5 w-75">
     <div id="visinaRetka" class="row">
-        <div class="div1 col-sm-3">esfrdgf</div>
+        <div class="div1 col-sm-3 my-auto">Vrijeme prijave:  {{date | date:'d.M.yyyy. h:mm'}}
+        </div>
         <div class="divider col-sm-1 mt-2 mb-2"></div>
-        <div class="div2 col-sm-3 my-auto"><img width="100px" height="100px" src="{{slucajnaSlika}}"></div>
+        <div class="div2 col-sm-3 my-auto"></div>
         <div class="divider col-sm-1 mt-2 mb-2"></div>
         <div class="div3 col-sm-3"><p>wergt</p></div>
     </div>
  </div>
 
+
+<!------------------------------------------MODAL RAČUN --------------------------------------------------- -->
+<div class="modal fade" id="modalRacun" tabindex="-1" role="dialog" aria-labelledby="modalRacun" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-warning my-auto" id="modalRacun">Račun</h5>
+          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body font-weight-bold">
+          <table class="table table-responsive table-bordered w-100 text-dark rounded">
+            <thead>
+              <tr>
+                <th>Rbr</th>
+                <th>Naziv</th>
+                <th>Količina</th>
+                <th>Cijena</th>
+                <th>Da</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="oStavke in vStavke">
+                  <td>{{$index}}</td>
+                  <td>{{oStavke.m_sNazivArtikla}}</td>
+                  <td>{{oStavke.odabranaKolicina}}</td>
+                  <td>{{oStavke.ukupnaCijena}}</td>
+                  <td>{{oStavke.m_nIdArtikla}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-right">Ukupna cijena: {{ukupnaCijenaRacuna}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
