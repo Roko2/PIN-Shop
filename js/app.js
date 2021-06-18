@@ -22,7 +22,6 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.vStavke=[];
     $scope.oZaposlenik;
     $scope.opisArtikla;
-    $scope.slucajnaSlika;
     $scope.ukupnaCijenaRacuna=0;
     $scope.kategorijaArtikla;
     $scope.vArtikliPotkategorije=[];
@@ -34,7 +33,16 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.oArtiklForma={id:null,naziv:null,opis:null,kolicina:null,cijena:null};
     $scope.artiklObrisi={nIdArtikla:null,sNazivArtikla:null};
 
-    $scope.OtvoriModalRacun=function(){
+    $scope.ObrisiStavkuRacuna=function(stavka){
+      console.log(stavka);
+      const index = $scope.vStavke.indexOf(stavka.oStavke);
+      $scope.vStavke.splice(index, 1);
+      var kosarica = $('#cart');;
+      var kolicinaKosarice = parseInt($scope.vStavke.length);
+      kosarica.attr('data-totalitems',kolicinaKosarice);
+    }
+
+    $scope.OtvoriModalRacun=function(){    
       $("#modalRacun").modal("show");
     }
     $scope.DodajArtikl=function(){
@@ -100,10 +108,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     brojUlaza=0;
     $scope.Kupi=function()
     {
-      var cart = $('#cart');
-      var cartTotal = cart.attr('data-totalitems');
-      var newCartTotal = parseInt(cartTotal) + 1;
-      cart.attr('data-totalitems',newCartTotal);
+      var kosarica = $('#cart');
       $http({
         url: "./query/jedanArtikl.php",
         method: "POST",
@@ -113,6 +118,8 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
         response.data.odabranaKolicina=parseFloat($("#unosKolicine").val());
         response.data.ukupnaCijena=Number.parseFloat($("#unosKolicine").val()*parseFloat(response.data.m_fJdCijenaArtikla)).toFixed(2);
         $scope.vStavke.push(response.data);
+        var kolicinaKosarice = parseInt($scope.vStavke.length);
+        kosarica.attr('data-totalitems',kolicinaKosarice);
         $scope.ukupnaCijenaRacuna=parseFloat($scope.ukupnaCijenaRacuna);
         $scope.vStavke.forEach(x => {
           $scope.ukupnaCijenaRacuna+=parseFloat(x.ukupnaCijena);

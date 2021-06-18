@@ -44,7 +44,7 @@
         </div>
         <div class="modal-body">
           <label>Količina artikla:</label>
-          <input id="unosKolicine" type="number" min="1" max="100" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+          <input id="unosKolicine" type="number" min="1" max="{{kvantitetaArtikla}}" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <div class="modal-footer">
           <button ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
@@ -151,8 +151,8 @@
         </button>
       </div>
       <div class="modal-body font-weight-bold">
-        <table class="table table-responsive w-100 text-dark rounded">
-          <thead>
+        <table id="tablicaRacun" class="table w-100 text-dark rounded">
+          <thead">
             <tr>
               <th class="align-middle">Rbr.</th>
               <th class="align-middle">Naziv</th>
@@ -167,11 +167,15 @@
                 <td class="align-middle">{{oStavke.m_sNazivArtikla}}</td>
                 <td class="align-middle">{{oStavke.odabranaKolicina}}</td>
                 <td class="align-middle">{{oStavke.ukupnaCijena}}</td>
-                <td class="align-middle"><button id="gumbObrisi" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+                <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiStavkuRacuna(this)" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+            </tr>
+            <tr ng-if="(vStavke.length < 1)">
+              <td colspan="5" class="text-center">U košarici nema niti jedne stavke</td>
             </tr>
           </tbody>
         </table>
         <div class="text-right">Ukupna cijena: {{ukupnaCijenaRacuna}} KN</div>
+        <div class="text-center mt-3"><button ng-class="{onemoguciGumb: vStavke.length < 1}" class="btn btn-primary w-50">Izradi račun</button></div>
       </div>
     </div>
   </div>
