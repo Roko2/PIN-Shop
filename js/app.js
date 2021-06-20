@@ -1,4 +1,4 @@
-var pcShop = angular.module('pcShop', ["ngRoute"]);
+var pcShop = angular.module('pcShop', ["ngRoute","ngSanitize"]);
 
 pcShop.config(function($routeProvider){
     $routeProvider.when('/', {
@@ -15,8 +15,9 @@ pcShop.config(function($routeProvider){
    });
    });
 
-pcShop.controller('mainController', function ($scope,$q, $http,$window) {
-    $scope.vKategorije = [];
+pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,$compile) {
+  $scope.funkcijaTest;
+    $scope.vKategorije=[];
     $scope.vArtikli=[];
     $scope.vPotkategorije=[];
     $scope.vStavke=[];
@@ -28,11 +29,14 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     $scope.kvantitetaArtikla;
     $scope.AzuriranjeArtiklId;
     $scope.odabranaKategorija;
-    $scope.date=new Date();
+    $scope.oModalPotvrda={headerModala:"",bodyModala:"",funkcijaModala:"",footerModala:""};
+    $scope.obavijestDodavanje={poruka:""};
     $scope.oArtikl={idArtikla:null};
+    $scope.datumIzradeRacuna=new Date();
     $scope.oArtiklForma={id:null,naziv:null,opis:null,kolicina:null,cijena:null};
     $scope.artiklObrisi={nIdArtikla:null,sNazivArtikla:null};
-
+    $scope.vrijemePrijave=$window.localStorage.getItem("vrijemePrijave");
+    $scope.oOsoba={};
     $scope.ObrisiStavkuRacuna=function(stavka){
       console.log(stavka);
       const index = $scope.vStavke.indexOf(stavka.oStavke);
@@ -42,7 +46,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
       kosarica.attr('data-totalitems',kolicinaKosarice);
     }
 
-    $scope.OtvoriModalRacun=function(){    
+    $scope.OtvoriModalRacun=function(){ 
       $("#modalRacun").modal("show");
     }
     $scope.DodajArtikl=function(){
@@ -52,6 +56,10 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
         headers: {'Content-Type': 'application/json'},
         data: getFormData($("#dodavanjeArtikla"))
       }).then(function(response){
+        $('#dodavanjeArtikla')[0].reset();
+        $('#odabirKategorije').prop('selectedIndex',0);
+        $scope.obavijestDodavanje={poruka:response.data};
+        $('#tostDodavanje').toast('show');
       }),function(response){
       };
     }
@@ -84,6 +92,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
     }
 
     $scope.Brisanje=function(idArtiklaBrisanje){
+      console.log(idArtiklaBrisanje);
       oArtiklObrisi={idArtikla:idArtiklaBrisanje};
       $http({
         url: "./crud/Artikl/delete.php",
@@ -94,9 +103,14 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
       $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));
       }),function(response){
       };
-    }
-    $scope.ObrisiArtikl=function(idArtikla,nazivArtikla){
-      $scope.artiklObrisi={nIdArtikla:idArtikla,sNazivArtikla:nazivArtikla};
+    } 
+   
+    $scope.ObrisiArtikl=function(idArtikla,nazivArtikla){ 
+    $scope.oModalPotvrda={headerModala:"Brisanje artikla",bodyModala:"obrisati artikl",footerModala:"Obriši"};
+    const buttonObrisi = $compile('<button type="button" class="btn btn-primary" ng-click="Brisanje('+idArtikla+')" data-dismiss="modal">Obriši</button>')($scope);
+    $('#funkcijaModala').empty();
+    angular.element(document.querySelector('#funkcijaModala').append(buttonObrisi[0]));
+    $scope.artiklObrisi={nIdArtikla:idArtikla,sNazivArtikla:nazivArtikla};
     }
     $scope.OpisArtikla=function(opis){
       $scope.opisArtikla=opis;
@@ -142,15 +156,15 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
          if(brojUlaza>0){
           $('#tablicaArtikli').DataTable().clear().destroy();
         }
-        setTimeout(function(){
-        $('#tablicaArtikli').DataTable({
+        $timeout(function () {
+          $('#tablicaArtikli').DataTable({
               width:"100%",
               // scrollY: 430,
               "searching": true,
               "lengthMenu": [ [10,25,50,-1], [10,25,50,"All"] ],
               scrollX: "100%"
             }); 
-        },100);
+      });
         brojUlaza++; 
       $window.localStorage.setItem("potkategorija",idPotkategorije);
       }),function(response){
@@ -172,16 +186,29 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window) {
           $window.localStorage.removeItem("email");
           $window.localStorage.removeItem("kljuc");
           $window.localStorage.removeItem("potkategorija");
+          $window.localStorave.removeItem("vrijemePrijave");
           $window.location.href='/PIN-Shop/prijava.html';
         }
       }),function(response){
         
       };
+      $http({
+        url: "./query/jedanZaposlenik.php",
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          data: JSON.stringify(oLocalStorage)
+      }).then(function(response){
+          $scope.oOsoba={...response.data};
+      }),function(response){
+  
+      };
+
     }
     $scope.Odjava=function(){
       $window.localStorage.removeItem("email");
       $window.localStorage.removeItem("kljuc");
       $window.localStorage.removeItem("potkategorija");
+      $window.localStorage.removeItem("vrijemePrijave");
       $window.location.href='/PIN-Shop/prijava.html';
       Cache.delete();
     }

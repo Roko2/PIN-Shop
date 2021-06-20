@@ -77,14 +77,14 @@ $(document).ready(function(){
   $("#copyright").append(row);
   $("#vratiNaPocetnu").on('click',function(){
     window.location.href="#!/";
-    const cartButtons = document.querySelectorAll('.cart-button');
-    cartButtons.forEach(button => {
-    button.addEventListener('click',cartClick);
-    })
-    function cartClick(){
-    let button =this;
-    button.classList.add('clicked');
-    }
+    // const cartButtons = document.querySelectorAll('.cart-button');
+    // cartButtons.forEach(button => {
+    // button.addEventListener('click',cartClick);
+    // })
+    // function cartClick(){
+    // let button =this;
+    // button.classList.add('clicked');
+    // }
   });
  
 
@@ -96,11 +96,6 @@ $("#kosarica").mouseleave(function(){
   $("#cart").removeClass("pomakniGumbBrojac");
 });
 });
-
-function PokaziPopup() {
-    var popup = document.getElementById("Popup");
-    popup.classList.toggle("show");
-  }
 
 function ProsiriOpis(){
   var prozor=document.getElementById("opisArtikla");

@@ -1,11 +1,15 @@
 <div class="container pocetnaContainer rounded text-white text-center mx-auto m-5 w-75">
     <div id="visinaRetka" class="row">
-        <div class="div1 col-sm-3 my-auto">Vrijeme prijave:  {{date | date:'d.M.yyyy. h:mm'}}
+        <div class="div1 col-sm-4 my-auto"><span class="box h-100 d-flex justify-content-center flex-column ">Vrijeme prijave:  {{vrijemePrijave}}</span></div>
+        <div class="div2 col-sm-4 my-auto">
+            <h3 class="d-block mb-4">Dobrodošli</h3>
+            <div class="d-block mb-4 h4">{{oOsoba.m_sIme}} {{oOsoba.m_sPrezime}}</div>
+            <div class="d-block mt-5"><button class="btn btn-success w-75">Provjerite svoju statistiku</button></div>
+    </div>
+        <div class="div3 col-sm-4 my-auto">
+            <p>wergt</p>
+            <div class="d-block divGumbRacuni"><button class="btn btn-primary w-50">Računi</button></div>
         </div>
-        <div class="divider col-sm-1 mt-2 mb-2"></div>
-        <div class="div2 col-sm-3 my-auto"></div>
-        <div class="divider col-sm-1 mt-2 mb-2"></div>
-        <div class="div3 col-sm-3"><p>wergt</p></div>
     </div>
  </div>
 

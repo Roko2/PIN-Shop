@@ -24,13 +24,26 @@
             <div class="form-group">
               <label for="odabirKategorije">Odabir kategorije</label>
               <select class="form-control" id="odabirKategorije" name="kategorijaArtikla" ng-model="novaKategorijaArtikla" ng-options="oPotkategorija.m_sNaziv for oPotkategorija in vPotkategorije track by oPotkategorija.m_nId">
-                <option value="">--Odaberite kategoriju artikla--</option>
+                <option value="" selected disabled hidden>--Odaberite kategoriju artikla--</option>
               </select>
             </div>
             <div class="mt-3 pb-1 text-center">
-            <button class="btn btn-primary w-25" ng-click="DodajArtikl()">Dodaj artikl</button>
+            <button class="btn btn-primary w-25" type="button" ng-click="DodajArtikl()">Dodaj artikl</button>
       </div>
     </form>
  </div>
 
- 
+ <div id="tost" aria-live="polite" aria-atomic="true">
+    <div id="tostDodavanje" class="toast" data-animation="true" data-delay="3000">
+      <div class="toast-header">
+        <span><i class="fas fa-comment" aria-hidden="true"></i></span>
+        <strong class="mr-auto">Obavijesst</strong>
+        <small class="text-muted ml-2">upravo sada</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        {{obavijestDodavanje.poruka}}
+      </div>
+</div>

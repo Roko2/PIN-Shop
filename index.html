@@ -21,8 +21,7 @@
     <header>
         <nav id="navbar" class="navbar navbar-expand-lg bg-secondary navbar-dark">
             <div class="container-fluid">
-            <a id="navbarBrand" href="#!/" onclick="PokaziPopup()" class="navbar-brand p-1 rounded" title="Početna">
-                <span class="popuptext" id="Popup">Dobrodošli u sustav PIN PCShop!</span>
+            <a id="navbarBrand" href="#!/" class="navbar-brand p-1 rounded" title="Početna">
                 <i class="fab fa-product-hunt brand"></i>CShop</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="smanjeniNavbar" aria-label="Toggle navigation" data-target="#smanjeniNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -64,9 +63,74 @@
   <p id="copyright"></p>
 </div>
 
-<!-- <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.5.js"></script> -->
+<!------------------------------------------MODAL RAČUN --------------------------------------------------- -->
+<div class="modal fade" id="modalRacun" tabindex="-1" role="dialog" aria-labelledby="modalRacun" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-warning my-auto" id="modalRacun">Račun</h5>
+          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body font-weight-bold">
+          <table id="tablicaRacun" class="table w-100 text-dark rounded">
+            <thead">
+              <tr>
+                <th class="align-middle">Rbr.</th>
+                <th class="align-middle">Naziv</th>
+                <th class="align-middle">Količina</th>
+                <th class="align-middle">Cijena</th>
+                <th class="align-middle">Ukloni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="oStavke in vStavke">
+                  <td class="align-middle">{{$index+1}}</td>
+                  <td class="align-middle">{{oStavke.m_sNazivArtikla}}</td>
+                  <td class="align-middle">{{oStavke.odabranaKolicina}}</td>
+                  <td class="align-middle">{{oStavke.ukupnaCijena}}</td>
+                  <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiStavkuRacuna(this)" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+              </tr>
+              <tr ng-if="(vStavke.length < 1)">
+                <td colspan="5" class="text-center">U košarici nema niti jedne stavke</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-inline">Datum: {{datumIzradeRacuna | date:'d.M.yyyy. H:mm:ss'}}</div>
+          <div class="d-inline float-right">Ukupna cijena: {{ukupnaCijenaRacuna}} KN</div>
+          <div class="text-center mt-3"><button ng-class="{onemoguciGumb: vStavke.length < 1}" class="btn btn-primary w-25">Izradi račun</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-----------------------------------------MODAL POTVRDA----------------------------------------->
+  
+  <div class="modal fade" id="modalPotvrda" tabindex="-1" role="dialog" aria-labelledby="modalPotvrda" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-warning my-auto" id="modalPotvrda">{{oModalPotvrda.headerModala}}</h5>
+          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+    <p class="text-center text-dark mt-2 h4">Jeste li sigurni da želite {{oModalPotvrda.bodyModala}}?</p><br>
+    <div ng-if="oModalPotvrda.headerModala=='Brisanje artikla'" class="text-center font-weight-bold">{{artiklObrisi.sNazivArtikla}}</div>
+  </div>
+        <div class="modal-footer">
+          <div id="funkcijaModala"></div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+        </div>
+      </div>
+    </div>
+</div>
+
     <script src="assets/plugins/angularjs/angular.min.js"></script>
     <script src="assets/plugins/angularjs/angular-route.min.js"></script>
+    <script src="assets/plugins/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="assets/plugins/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="assets/plugins/bootstrap-4.6.0-dist/js/bootstrap.min.js"></script>

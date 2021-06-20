@@ -24,7 +24,6 @@ $scope.Login=function(){
         data: getFormData($("#prijavaForma"))
     }).then(function(response) {
         if(response.data != ""){
-            console.log(response.data);
             setTimeout(function(){
             const valja1=document.getElementById("inptLozinka");
             const valja2=document.getElementById("inptEmail");
@@ -34,6 +33,7 @@ $scope.Login=function(){
             setTimeout(function () {
                  $window.localStorage.setItem("email",response.data.email);
                  $window.localStorage.setItem("kljuc",response.data.kljuc);
+                 $window.localStorage.setItem("vrijemePrijave",response.data.vrijemePrijave);
                  $window.location.href ='/PIN-Shop/index.html';
             }, 2000);
         }

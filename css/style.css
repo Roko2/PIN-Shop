@@ -90,7 +90,7 @@ span{
   height: 15% !important;
 }
 .container{
-  height: 200px;
+  height: 300px;
 }
 .sadrzaj{
   min-height: 100% !important;
@@ -185,12 +185,6 @@ span{
   z-index: -1;
 }
 
-  /*
-
-#tablicaArtikli thead tr{
-  display:block;
-  text-align: center;
-} */
 table,th,td {
       border: 1px solid white;
       border-collapse: collapse;
@@ -469,28 +463,25 @@ table,th,td {
 .mycontent-left {
   border-right: 1px dashed white;
 }
-.divider{
-  border-left:1px solid white;
-}
-/* .div1 {
-  width:200px;
-  height:200px;
-  background:white;
-  float: left;
-}
 
+ .div1 {
+  border-right-style: solid;
+  height: 90%;
+  border-right-color: white;
+}
+/*
 .div2 {
   width:200px;
   height:200px;
   background:white;
   left: 50%;
 }
+*/
 .div3 {
-  width:200px;
-  height:200px;
-  background:white;
-  float: right;
-} */
+  border-left-style: solid;
+  height: 90%;
+  border-left-color: white;
+} 
 #visinaRetka{
   height: 100% !important;
 }
@@ -635,4 +626,19 @@ table,th,td {
 .onemoguciGumb{
   pointer-events: none;
   opacity: 0.5;
+}
+
+.toast{
+  position: absolute !important; 
+  bottom: 25% !important; 
+  right: 0 !important;
+}
+
+/* #tost{
+  position: relative !important; 
+  min-height: 200px !important;
+} */
+
+.divGumbRacuni{
+  margin-top: 50%;
 }

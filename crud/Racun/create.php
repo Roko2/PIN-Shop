@@ -23,5 +23,5 @@ $oStatement->bindParam(":kvantiteta", $data->kolicinaArtikla);
 $oStatement->bindParam(":potkategorija", $data->kategorijaArtikla);
 $oStatement->execute();
 
-echo json_encode(array("poruka"=>"Artikl uspješno dodan!"));
+echo json_encode(array("poruka"=>"Račun uspješno izrađen!"));
 ?>
