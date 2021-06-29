@@ -1,0 +1,62 @@
+<div id="racunContainer" class="tableContainer mb-5 rounded">
+    <h3 class="mx-auto text-white text-center">Računi</h3>
+      <table id="tablicaRacuni" class="table mx-auto text-white text-center w-100" ng-init="DohvatiRacune()">
+        <thead style="background-color: #B61624;">
+          <tr>
+              <th class="align-middle">Rbr</th>
+              <th class="align-middle">Šifra</th>
+              <th class="align-middle">Datum</th>
+              <th class="align-middle" style="min-width: 130px;">Iznos (HRK)</th>
+              <th class="align-middle">Detalji računa</th>
+              <th class="align-middle">Brisanje</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="racun in vRacuni"> 
+              <td class="align-middle">{{$index+1}}</td>
+              <td class="align-middle">{{racun.m_nSifraRacuna}}</td>
+              <td class="align-middle" style="min-width: 130px;">{{racun.m_sDatum}}</td>
+              <td class="align-middle">{{racun.m_fUkupanIznos}}</td>
+              <td class="align-middle"><button data-toggle="modal" class="btn gumbTablica text-white d-inline plaviGumbTablice" data-target="#modalDetaljiRacuna" ng-click="DetaljiRacuna(racun.m_nSifraRacuna,racun.m_nPopust)" title="Kliknite za detalje"><i class="fas fa-info-circle" aria-hidden="true"></i></button></td>
+              <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiRacun(racun.m_nSifraRacuna)" data-toggle="modal" data-target="#modalPotvrda" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+            </tr>
+      </tbody>
+      </table>
+  </div>
+
+  <!------------------------------MODAL DETALJI RAČUNA ----------------------------------->
+  <div id="modalDetaljiRacuna"  class="modal fade text-warning" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header  bg-dark">
+          <h5 class="modal-title">Detaljni opis računa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body text-dark">
+          <h4 class="text-center">Stavke</h4>
+          <div class="font-weight-bold">Izdao: {{oOsoba.m_sIme}} {{oOsoba.m_sPrezime}}</div>
+          <table class="table table-striped text-center w-100 text-dark rounded mt-2">
+              <thead>
+                  <tr>
+                      <th class="align-middle">Rbr</th>
+                      <th class="align-middle">Naziv artikla</th>
+                      <th class="align-middle">Količina</th>
+                      <th class="align-middle">Cijena stavke (HRK)</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="stavkeRacuna in vStavkeRacuna">
+                      <td class="align-middle">{{$index+1}}</td>
+                      <td class="align-middle">{{stavkeRacuna.m_sNazivArtikla}}</td>
+                      <td class="align-middle">{{stavkeRacuna.m_nKolicina}}</td>
+                      <td class="align-middle">{{stavkeRacuna.m_fUkCijena}}</td>
+                  </tr>
+              </tbody>
+          </table>
+          <div ng-if="popustRacunBaza>0" class="text-left"><b class="text-danger">NAPOMENA: </b>Ostvaren je popust na računu od {{popustRacunBaza}}%</div>
+        </div>
+      </div>
+    </div>
+  </div>

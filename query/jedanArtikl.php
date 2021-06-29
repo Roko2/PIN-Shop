@@ -8,11 +8,11 @@ header('Content-Type: text/html; charset=utf-8');
 header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');
 $data=json_decode(file_get_contents('php://input'));
-$sQuery="SELECT ID,Naziv,Opis,Jmj,Kvantiteta,JdCijena,NazivPotkategorije FROM artikl LEFT JOIN potkategorije on artikl.IdPotkategorije=potkategorije.IDpotkategorije WHERE ID=:idArtikla";
+$sQuery="SELECT ID,Naziv,Opis,Jmj,Kvantiteta,JdCijena,NazivPotkategorije,Aktivnost FROM artikl LEFT JOIN potkategorije on artikl.IdPotkategorije=potkategorije.IDpotkategorije WHERE ID=:idArtikla";
 $oStatement = $oConnection->prepare($sQuery);
 $oStatement->bindParam(':idArtikla',$data->idArtikla);
 $oStatement->execute();
 $oRow = $oStatement->fetch(PDO::FETCH_ASSOC);      
-$oArtikl=new Artikl($oRow['ID'],$oRow['Naziv'],$oRow['Opis'],$oRow['Jmj'],$oRow['JdCijena'],$oRow['Kvantiteta'],$oRow['NazivPotkategorije']);
+$oArtikl=new Artikl($oRow['ID'],$oRow['Naziv'],$oRow['Opis'],$oRow['Jmj'],$oRow['JdCijena'],$oRow['Kvantiteta'],$oRow['NazivPotkategorije'],$oRow['Aktivnost']);
 echo(json_encode($oArtikl));
 ?>

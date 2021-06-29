@@ -2,7 +2,7 @@
 // include "../../path_helper.php";
 // include (ROOT ."\\classes\\Configuration.php");
 // include "../classes/Configuration.php";
-include $_SERVER['DOCUMENT_ROOT']."/PIN-Shop/classes/Configuration.php";
+include $_SERVER['DOCUMENT_ROOT']."/PIN-Shop/classes/Konfiguracija.php";
 $oVeza=new Configuration();
 try
 {

@@ -14,18 +14,19 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="artikl in vArtikliPotkategorije "> 
+        <tr ng-repeat="artikl in vArtikliPotkategorije" ng-if="artikl.m_bAktivnost==1"> 
             <td class="align-middle">{{$index+1}}</td>
             <td class="align-middle" style="min-width: 180px;">{{artikl.m_sNazivArtikla}}</td>
             <td class="align-middle" data-toggle="modal" data-target="#modalDetalji" ng-click="OpisArtikla(artikl.m_sOpisArtikla)" title="Kliknite za detalje" id="opisArtikla">{{artikl.m_sOpisArtikla}}</td>
             <td class="align-middle">{{artikl.m_nKvantitetaArtikla}} {{artikl.m_sJmjArtikla}}</td>
             <td class="align-middle">{{artikl.m_fJdCijenaArtikla}}</td>
-            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" ng-click="KvantitetaArtikla(artikl.m_nKvantitetaArtikla,artikl.m_nIdArtikla)"  data-target="#modalDodajArtikl" class="btn btn-success gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
-            <td class="align-middle"><button id="gumbAzuriraj" data-toggle="modal" ng-click="ArtiklAzuriraj(artikl.m_nIdArtikla)" data-target="#modalAzuriranje" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-wrench d-inline mr-1" aria-hidden="true"></i></button></td>
-            <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiArtikl(artikl.m_nIdArtikla,artikl.m_sNazivArtikla)" data-toggle="modal" data-target="#modalPotvrda" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
+            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" ng-class="{onemoguciGumb: artikl.m_nKvantitetaArtikla==0}" ng-click="KvantitetaArtikla(artikl.m_nKvantitetaArtikla,artikl.m_nIdArtikla)"  data-target="#modalDodajArtikl" class="btn gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
+            <td class="align-middle"><button data-toggle="modal" ng-click="ArtiklAzurirajForma(artikl.m_nIdArtikla)" data-target="#modalAzuriranje" class="btn gumbTablica text-white d-inline plaviGumbTablice"><i class="fa fa-wrench d-inline mr-1" aria-hidden="true"></i></button></td>
+            <td class="align-middle" ng-class="{cursorNotAllowed: artikl.m_nKvantitetaArtikla>0}"><button ng-class="{onemoguciGumb: artikl.m_nKvantitetaArtikla>0}" id="gumbObrisi" ng-click="ObrisiArtikl(artikl.m_nIdArtikla,artikl.m_sNazivArtikla)" data-toggle="modal" data-target="#modalPotvrda" class="btn gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
           </tr>
     </tbody>
     </table>
+    <p class="text-left text-white"><b class="text-danger">NAPOMENA: </b>Ne možete obrisati artikl ako mu je količina dostupna!</p>
 </div>
 
 
@@ -45,7 +46,7 @@
           <input id="unosKolicine" type="number" min="1" max="{{kvantitetaArtikla}}" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <div class="modal-footer">
-          <button ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
+          <button ng-class="{onemoguciGumb: provjeraKolicine+odabranaKolicinaStavkeRacun>kvantitetaArtikla}" ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
         </div>
       </div>
@@ -93,20 +94,19 @@
             </div>
             <div class="form-group">
               <label for="updateKolicinaArtikl">Količina</label>
-              <input type="number" id="updateKolicinaArtikl" class="form-control w-25" name="kolicinaArtikla" ng-model="oArtiklForma.kolicina">
+              <input type="number" id="updateKolicinaArtikl" class="form-control w-25" min="0" name="kolicinaArtikla" ng-model="oArtiklForma.kolicina" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             </div>
             <div class="form-group">
               <label for="updateCijenaArtikla">Cijena (HRK)</label>
-              <input type="text" id="updateCijenaArtikla" class="form-control w-25" name="cijenaArtikla" ng-model="oArtiklForma.cijena">
+              <input type="text" id="updateCijenaArtikla" class="form-control w-25" name="cijenaArtikla" ng-model="oArtiklForma.cijena"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/g);">
             </div>
             <div class="form-group">
               <label for="odabirKategorije">Odabir kategorije</label>
               <select class="form-control" id="odabirKategorije" name="kategorijaArtikla" ng-options="oPotkategorija.m_nId as oPotkategorija.m_sNaziv for oPotkategorija in vPotkategorije" ng-model="odabranaKategorija">
-                <option value=""></option>
               </select>
             </div>
             <div class="mt-3 text-center">
-            <button class="btn btn-primary" data-dismiss="modal" ng-click="AzurirajArtikl()">Ažuriraj</button>
+            <button class="btn btn-primary" data-target="#modalPotvrda" data-toggle="modal" ng-click="ArtiklAzuriraj()">Ažuriraj</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
       </div>
           </form>
@@ -115,25 +115,3 @@
   </div>
 </div>
 
-  <!-----------------------------------------MODAL POTVRDA----------------------------------------->
-  
-  <div class="modal fade" id="modalPotvrda" tabindex="-1" role="dialog" aria-labelledby="modalPotvrda" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-dark">
-          <h5 class="modal-title text-warning my-auto" id="modalPotvrda">{{oModalPotvrda.headerModala}}</h5>
-          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
-            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
-          </button>
-        </div>
-        <div class="modal-body">
-    <p class="text-center text-dark mt-2 h4">Jeste li sigurni da želite {{oModalPotvrda.bodyModala}}?</p><br>
-    <div ng-if="oModalPotvrda.headerModala=='Brisanje artikla'" class="text-center font-weight-bold">{{artiklObrisi.sNazivArtikla}}</div>
-  </div>
-        <div class="modal-footer">
-          <div id="funkcijaModala" ng-bind-html="adje"></div>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
-        </div>
-      </div>
-    </div>
-</div>

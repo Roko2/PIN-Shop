@@ -97,7 +97,7 @@ span{
 }
 .footer,
 .poguraj {
-  height: 40px !important;
+  height: 50px !important;
 }
 
 #korisnik{
@@ -164,10 +164,13 @@ span{
   top:0;
 }
 .tableContainer{
+  overflow-x: auto;
   margin: 5% 10% 0%;
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   opacity: 0.9;
   background-color:rgba(30, 32, 44, 0.95);
+  padding-left: 200px;
+  padding-right: 200px;
 }
 .mainWrapper::after{
   content: "";
@@ -421,13 +424,13 @@ table,th,td {
 	background-color: #D73814;
 }
 
-.gumbTablica#gumbAzuriraj {
+.gumbTablica.plaviGumbTablice {
 	box-shadow: 0 0 0 1px #417fbd inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #4D5BBE, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
 	background-color: #4274D7;
 }
 
-.gumbTablica#gumbAzuriraj:active,
-.gumbTablica#gumbAzuriraj.active {
+.gumbTablica.plaviGumbTablice:active,
+.gumbTablica.plaviGumbTablice.active {
 	box-shadow: 0 0 0 1px #417fbd inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
 	background-color: #4274D7;
 }
@@ -627,11 +630,14 @@ table,th,td {
   pointer-events: none;
   opacity: 0.5;
 }
+.cursorNotAllowed{
+  cursor: not-allowed;
+}
 
 .toast{
   position: absolute !important; 
-  bottom: 25% !important; 
-  right: 0 !important;
+  top:75%;
+  right: 0;
 }
 
 /* #tost{
@@ -641,4 +647,166 @@ table,th,td {
 
 .divGumbRacuni{
   margin-top: 50%;
+}
+.akcije{
+  text-decoration: underline;
+}
+
+.wrapper {
+  display: inline-flex;
+}
+
+.wrapper .icon {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #ffffff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background-color: #ffffff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background-color: #3b5999;
+  color: #ffffff;
+}
+
+.wrapper .twitter:hover,
+.wrapper .twitter:hover .tooltip,
+.wrapper .twitter:hover .tooltip::before {
+  background-color: #46c1f6;
+  color: #ffffff;
+}
+
+.wrapper .instagram:hover,
+.wrapper .instagram:hover .tooltip,
+.wrapper .instagram:hover .tooltip::before {
+  background-color: #e1306c;
+  color: #ffffff;
+}
+
+.wrapper .github:hover,
+.wrapper .github:hover .tooltip,
+.wrapper .github:hover .tooltip::before {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.wrapper .youtube:hover,
+.wrapper .youtube:hover .tooltip,
+.wrapper .youtube:hover .tooltip::before {
+  background-color: #de463b;
+  color: #ffffff;
+}
+
+.gumbPopust {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 0.02rem;
+  cursor: pointer;
+  background: transparent;
+  border: 0.3rem solid black ;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: black;
+  position: relative;
+  transition: color 0.3s;
+}
+.gumbPopust {
+  color: black;
+}
+.gumbPopust:hover::before {
+  width: 0;
+}
+.gumbPopust:hover::after {
+  height: 0;
+}
+.gumbPopust:active {
+  border-width: 0.25rem;
+}
+.gumbPopust span {
+  position: relative;
+  z-index: 2;
+}
+.gumbPopust::before, .gumbPopust::after {
+  content: '';
+  position: absolute;
+  background: white;
+  z-index: 1;
+  transition: all 0.3s;
+}
+.gumbPopust::before {
+  width: calc(100% - 2rem);
+  height: calc(101% + 1rem);
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.gumbPopust::after {
+  height: calc(100% - 2rem);
+  width: calc(101% + 1rem);
+  left: -0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#racunContainer{
+  padding: 5rem 10rem;
+}
+.fa-comment{
+  color: #007aff;
+}
+.dodajPopust{
+  text-decoration: line-through;
+}
+.popustenaCijena{
+  color: red;
+  font-size: 20px;
 }

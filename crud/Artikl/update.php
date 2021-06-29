@@ -2,7 +2,7 @@
 include "../../database/connection.php";
 include "../../classes/Artikl.php";
 header('Content-Type: text/html; charset=utf-8');
-header('Content-Type: application/x-www-form-urlencoded');
+header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');
 $data=json_decode(file_get_contents('php://input'));
 $sQuery = "UPDATE artikl SET Naziv=:naziv, Opis=:opis, JdCijena=:jdCijena,Kvantiteta=:kolicina, IdPotkategorije=:potkategorija WHERE ID=:idArtikla";
@@ -23,5 +23,5 @@ $oStatement->bindParam(":kolicina", $data->kolicinaArtikla);
 $oStatement->bindParam(":potkategorija", $kategorija);
 $oStatement->execute();
 
-echo json_encode(array("poruka"=>"Artikl uspješno azuriran!"));
+echo json_encode("Artikl uspješno ažuriran!");
 ?>

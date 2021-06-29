@@ -59,18 +59,14 @@ $('#pocetna').click(function(){
 
   setTimeout(function () {
     $(function () {
-      $("#navIcon1").attr("class","fa fa-microchip mr-1 text-white");
-      $("#navIcon2").attr("class","fa fa-desktop mr-1 text-white");
-      $("#navIcon3").attr("class","fa fa-print mr-1 text-white");
-      $("#navIcon4").attr("class","fa fa-database mr-1 text-white");
-      $("#navIcon5").attr("class","fa fa-mouse mr-1 text-white");
-      $("#navIcon6").attr("class","fa fa-network-wired mr-1 text-white");
-      $("#navIcon7").attr("class","fa fa-laptop mr-1 text-white");
+      
     });
   }, 100);
 
 $(document).ready(function(){
-
+  $(function() {
+    $('.tooltip-wrapper').tooltip({position: "bottom"});
+});
   var datum=new Date();
   var trenutnaGodina=datum.getFullYear();
   var row="<b>© Copyright "+trenutnaGodina+"</b>";

@@ -4,14 +4,14 @@ class Racun{
     public $m_sEmailZaposlenika;
     public $m_fUkupanIznos;
     public $m_sDatum;
-    public $m_vStavke=array();
+    public $m_nPopust;
 
-    public function __construct($sifra,$emailZaposlenika,$ukIznos,$datum,$stavke){
+    public function __construct($sifra,$emailZaposlenika,$ukIznos,$datum,$popust){
         $this->m_nSifraRacuna=$sifra;
         $this->m_sEmailZaposlenika=$emailZaposlenika;
         $this->m_fUkupanIznos=$ukIznos;
         $this->m_sDatum=$datum;
-        $this->m_vStavke=(array)$stavke;
+        $this->m_nPopust=$popust;
     }
 }
 ?>
