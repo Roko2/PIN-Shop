@@ -14,19 +14,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="artikl in vArtikliPotkategorije" ng-if="artikl.m_bAktivnost==1"> 
+        <tr ng-repeat="artikl in vArtikliPotkategorije" ng-attr-id="{{artikl.m_nIdArtikla}}"> 
             <td class="align-middle">{{$index+1}}</td>
             <td class="align-middle" style="min-width: 180px;">{{artikl.m_sNazivArtikla}}</td>
             <td class="align-middle" data-toggle="modal" data-target="#modalDetalji" ng-click="OpisArtikla(artikl.m_sOpisArtikla)" title="Kliknite za detalje" id="opisArtikla">{{artikl.m_sOpisArtikla}}</td>
             <td class="align-middle">{{artikl.m_nKvantitetaArtikla}} {{artikl.m_sJmjArtikla}}</td>
             <td class="align-middle">{{artikl.m_fJdCijenaArtikla}}</td>
-            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" ng-class="{onemoguciGumb: artikl.m_nKvantitetaArtikla==0}" ng-click="KvantitetaArtikla(artikl.m_nKvantitetaArtikla,artikl.m_nIdArtikla)"  data-target="#modalDodajArtikl" class="btn gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i>Kupi</button></td>
+            <td class="align-middle"><button id="gumbKupi" data-toggle="modal" ng-class="{onemoguciGumb: artikl.m_nKvantitetaArtikla==0}" ng-click="KvantitetaArtikla(artikl.m_nKvantitetaArtikla,artikl.m_nIdArtikla)"  data-target="#modalDodajArtikl" class="btn gumbTablica text-white d-inline"><i class="fa fa-cart-plus d-inline mr-1" aria-hidden="true"></i></button></td>
             <td class="align-middle"><button data-toggle="modal" ng-click="ArtiklAzurirajForma(artikl.m_nIdArtikla)" data-target="#modalAzuriranje" class="btn gumbTablica text-white d-inline plaviGumbTablice"><i class="fa fa-wrench d-inline mr-1" aria-hidden="true"></i></button></td>
             <td class="align-middle" ng-class="{cursorNotAllowed: artikl.m_nKvantitetaArtikla>0}"><button ng-class="{onemoguciGumb: artikl.m_nKvantitetaArtikla>0}" id="gumbObrisi" ng-click="ObrisiArtikl(artikl.m_nIdArtikla,artikl.m_sNazivArtikla)" data-toggle="modal" data-target="#modalPotvrda" class="btn gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
           </tr>
     </tbody>
     </table>
-    <p class="text-left text-white"><b class="text-danger">NAPOMENA: </b>Ne možete obrisati artikl ako mu je količina dostupna!</p>
+    <div class="text-left text-white d-flex"><b class="text-danger">NAPOMENA: </b><div class="d-inline ml-1">Ne možete obrisati artikl ako mu je količina dostupna!<br>
+    Ukoliko je gumb <i>Košarica</i> onemogućen znači da je artikl već u košarici!</div></div>
 </div>
 
 
@@ -46,7 +47,7 @@
           <input id="unosKolicine" type="number" min="1" max="{{kvantitetaArtikla}}" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
         </div>
         <div class="modal-footer">
-          <button ng-class="{onemoguciGumb: provjeraKolicine+odabranaKolicinaStavkeRacun>kvantitetaArtikla}" ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
+          <button ng-class="{onemoguciGumb: provjeraKolicine>kvantitetaArtikla}" ng-click="Kupi()" id="kupiArtikl" type="button" class="btn btn-primary" data-dismiss="modal">Spremi u košaricu</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
         </div>
       </div>
@@ -110,7 +111,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
       </div>
           </form>
-</div>
+      </div>
     </div>
   </div>
 </div>

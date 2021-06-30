@@ -15,6 +15,9 @@ pcShop.config(function($routeProvider){
    $routeProvider.when('/racuni',{
     templateUrl: 'templates/racuni.html'
    });
+   $routeProvider.when('/zaposlenici',{
+     templateUrl: 'templates/zaposlenici.html'
+   })
    $routeProvider.otherwise({
     templateUrl: 'templates/error.html'
    });
@@ -29,6 +32,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   $scope.vStavkeRacuna=[];
   $scope.vStavke=[];
   $scope.vRacuni=[];
+  $scope.vZaposlenici=[];
   $scope.oZaposlenik;
   $scope.opisArtikla;
   $scope.ukupnaCijenaRacuna=0;
@@ -49,6 +53,49 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   $scope.provjeraKolicine;
   $scope.popustRacunBaza;
   $scope.odabranaKolicinaStavkeRacun;
+  $scope.rezultat=0;
+  //----------------Poziv API-a za dohvacanje zaposlenika iz baze-------------------------
+  $scope.DohvatiZaposlenike=function(){
+    $http({
+      url:'./crud/Zaposlenik/read.php',
+      method:'GET'
+    }).then(function(response){
+      try{$('#tablicaRacuni').DataTable().clear().destroy();}
+        catch(e){};
+        $scope.vZaposlenici=response.data;
+        $timeout(function(){
+          $('#tablicaZaposlenici').DataTable({
+          "searching": true,
+          "lengthMenu": [[10,25,50,-1], [10,25,50,"All"]],
+          columnDefs: [ { orderable: false, targets: [4,8,10,11] }, { searchable: false, targets: [8,10,11] } ]
+          });
+        });
+    }),function(response){};
+  }
+  //---------------Povecavanje kolicine stavke u košarici--------------------------
+  $scope.SmanjiKolicinu=function(idArtikla){
+    for(var i=0;i<$scope.vStavke.length;i++){
+       if($scope.vStavke[i].m_nIdArtikla==idArtikla){
+         if($scope.vStavke[i].odabranaKolicina>1){
+           $scope.vStavke[i].odabranaKolicina-=1;
+         }
+       }
+     }
+     IzracunajRacun();
+   }
+  //---------------Povecavanje kolicine stavke u košarici--------------------------
+  $scope.PovecajKolicinu=function(idArtikla){
+   for(var i=0;i<$scope.vStavke.length;i++){
+      if($scope.vStavke[i].m_nIdArtikla==idArtikla){
+        if($scope.vStavke[i].odabranaKolicina<$scope.kvantitetaArtikla){
+          $scope.vStavke[i].odabranaKolicina+=1; 
+          $scope.vStavke[i].ukupnaCijena=parseFloat($scope.vStavke[i].m_fJdCijenaArtikla)*parseFloat($scope.vStavke[i].odabranaKolicina);
+          $scope.vStavke[i].ukupnaCijena= $scope.vStavke[i].ukupnaCijena.toFixed(2);
+        }
+      }
+    }
+    IzracunajRacun();
+  }
   //---------------------Potvrda brisanja računa---------------------------------------
   $scope.ObrisiRacunPotvrda=function(idRacun){
     oRacunObrisi={IDracuna:idRacun};
@@ -75,7 +122,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
     $scope.popustRacunBaza=popustRac;
     oRacun={IdRacuna:racunID};
     $http({
-      url:'./query/stavkeRacuna.php',
+      url:'./crud/Racun/readStavkeRacuna.php',
       method:'POST',
       headers: {'Content-Type': 'application/json'},
       data:JSON.stringify(oRacun)
@@ -93,7 +140,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
     $scope.vStavke.forEach(x => {
       $scope.ukupnaCijenaRacuna+=parseFloat(x.ukupnaCijena);
     }); 
-    $scope.ukupnaCijenaRacuna=$scope.ukupnaCijenaRacuna-(($scope.ukupnaCijenaRacuna*parseFloat($scope.popustRacuna) )/100);
+    $scope.ukupnaCijenaRacuna=$scope.ukupnaCijenaRacuna-(($scope.ukupnaCijenaRacuna*parseFloat($scope.popustRacuna))/100);
     $scope.ukupnaCijenaRacuna=$scope.ukupnaCijenaRacuna.toFixed(2);
   }
   //-----------------Poziv API-ja za izradu računa te upis u bazu-------------------------------
@@ -135,6 +182,13 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   var kosarica = $('#cart');
   var kolicinaKosarice = parseInt($scope.vStavke.length);
   kosarica.attr('data-totalitems',kolicinaKosarice);
+  console.log(stavka.oStavke);
+  $('#tablicaArtikli > tbody  > tr').each(function(index, tr) { 
+    if(stavka.oStavke.m_nIdArtikla==tr.id){
+      console.log("da");
+      $(tr).find('td #gumbKupi').removeClass("onemoguciGumb");
+    }
+ });
   IzracunajRacun();
     }
 
@@ -180,7 +234,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
     $scope.AzuriranjeArtiklId=ArtiklId;
     oArtiklAzuriraj={idArtikla:ArtiklId};
     $http({
-      url: "./query/jedanArtikl.php",
+      url: "./crud/Artikl/readOne.php",
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       data: JSON.stringify(oArtiklAzuriraj)
@@ -237,44 +291,51 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
     $scope.opisArtikla=opis;
   }
 
-  //------------spremanje dostupne količine artikla u scop varijablu-------------------------
-  $timeout(function(){
-     $("#unosKolicine").bind("change",function() {
+  $(document).on('click', '#gumbKupi', function(){
     $scope.provjeraKolicine=parseInt($("#unosKolicine").val());
- });
   });
- 
+  //------------spremanje dostupne količine artikla u scop varijablu-------------------------
+  $(document).on('input','#unosKolicine',function(){
+   $scope.provjeraKolicine=parseInt($("#unosKolicine").val());
+   if($scope.vStavke.length>0){
+    $scope.vStavke.forEach(element => {
+      if(element.m_nIdArtikla==$scope.oArtikl.idArtikla){
+        $scope.odabranaKolicinaStavkeRacun=parseInt(element.odabranaKolicina);
+        postojiArtiklNaRacunu=true;
+      }
+    });
+    $scope.odabranaKolicinaStavkeRacun=parseInt($scope.odabranaKolicinaStavkeRacun);
+    $scope.rezultat=$scope.odabranaKolicinaStavkeRacun+$scope.provjeraKolicine;
+  }
+  });  
+
   $scope.KvantitetaArtikla=function(kvantiteta,artiklID){
-    $scope.kvantitetaArtikla=kvantiteta;
+    $scope.kvantitetaArtikla=parseInt(kvantiteta);
     $scope.oArtikl={idArtikla:artiklID};
-    if($scope.vStavke.length>0){
-      $scope.vStavke.forEach(element => {
-        if(element.m_nIdArtikla==artiklID){
-          $scope.odabranaKolicinaStavkeRacun=parseInt(element.odabranaKolicina);
-          postojiArtiklNaRacunu=true;
-        }
-      });
-      $scope.odabranaKolicinaStavkeRacun=parseInt($scope.odabranaKolicinaStavkeRacun);
-    }
   }
   //----------------spremanje artikla u košaricu automatski izračunavajući ukupnu cijenu artikla-----------------------------
   $scope.Kupi=function()
   {
-    postojiArtiklNaRacunu=false;
     var kosarica = $('#cart');
     $http({
-      url: "./query/jedanArtikl.php",
+      url: "./crud/Artikl/readOne.php",
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       data: JSON.stringify($scope.oArtikl)
     }).then(function(response){
-      response.data.odabranaKolicina=$("#unosKolicine").val();
+      response.data.odabranaKolicina=parseInt($("#unosKolicine").val().replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));
       response.data.ukupnaCijena=Number.parseFloat($("#unosKolicine").val()*parseFloat(response.data.m_fJdCijenaArtikla)).toFixed(2);
       $scope.vStavke.push(response.data);
       $scope.ukupnaCijenaRacuna=0;
       $scope.ukupnaCijenaRacuna=parseFloat($scope.ukupnaCijenaRacuna);
       $scope.vStavke.forEach(x => {
       $scope.ukupnaCijenaRacuna+=parseFloat(x.ukupnaCijena);
+      $('#tablicaArtikli > tbody  > tr').each(function(index, tr) { 
+        if(x.m_nIdArtikla==tr.id){
+          $(tr).find('td #gumbKupi').addClass("onemoguciGumb");
+        }
+     });
+      
     }); 
       $scope.ukupnaCijenaRacuna=$scope.ukupnaCijenaRacuna.toFixed(2);
       var kolicinaKosarice = parseInt($scope.vStavke.length);
@@ -285,18 +346,17 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   };
 
   //------------------------inicijaliziranje tablice artikala ispisanih po odabranoj kategoriji-----------------------------
-  brojUlaza=0;
   $scope.PosaljiIdPotkategorije=function(idPotkategorije){
   oPotkategorija={potkategorijaID:idPotkategorije};
     $http({
-      url: "./query/artikliPotkategorije.php",
+      url: "./crud/Artikl/readArtikliPotkategorije.php",
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       data: JSON.stringify(oPotkategorija)
     }).then(function(response){
       $scope.vArtikliPotkategorije=response.data;
       $scope.kategorijaArtikla=response.data[0].m_nIdPotkategorijaArtikla;
-        if(brojUlaza>0){
+        if($scope.vArtikliPotkategorije.length>0){
         $('#tablicaArtikli').DataTable().clear().destroy();
       }
       $timeout(function () {
@@ -305,8 +365,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
             "lengthMenu": [ [10,25,50,-1], [10,25,50,"All"] ],
             columnDefs: [ { orderable: false, targets: [5,6,7] }, { searchable: false, targets: [5,6,7] } ]
           }); 
-    });
-      brojUlaza++; 
+    }); 
     $window.localStorage.setItem("potkategorija",idPotkategorije);
     }),function(response){
     };
@@ -344,7 +403,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
     }),function(response){
     };
     $http({
-      url: "./query/jedanZaposlenik.php",
+      url: "./crud/Zaposlenik/readOne.php",
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       data: JSON.stringify(oLocalStorage)
@@ -372,18 +431,18 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
 
   //------------skup GET zahtjeva za dohvaćanje podataka iz baze------------------------
   $q.all([
-      $http.get("./query/kategorije.php"),
-      $http.get("./query/artikli.php"),
-      $http.get("./query/potkategorije.php")
+      $http.get("./crud/Kategorija/kategorija.php"),
+      $http.get("./crud/Artikl/read.php"),
+      $http.get("./crud/Kategorija/potkategorija.php")
     ]).then(function(results) {
         $scope.vKategorije=results[0].data;
         $scope.vArtikli=results[1].data;
-        $scope.vPotkategorije=results[2].data;      
+        $scope.vPotkategorije=results[2].data;    
     });
   //-----------------API za dohvacanje racuna iz baze--------------------------
   $scope.DohvatiRacune=function(){
     $http({
-      url:'./query/racuni.php',
+      url:'./crud/Racun/read.php',
       method:'GET'
     }).then(function(response){
         try{$('#tablicaRacuni').DataTable().clear().destroy();}

@@ -1,7 +1,7 @@
 <?php
-include '../database/connection.php';
-include '../classes/Kategorija.php';
-include '../classes/Potkategorija.php';
+include '../../database/connection.php';
+include '../../classes/Kategorija.php';
+include '../../classes/Potkategorija.php';
 // include "../path_helper.php";
 // include (ROOT ."\\database\\connection.php");
 // include (ROOT ."\\classes\\Category.php");

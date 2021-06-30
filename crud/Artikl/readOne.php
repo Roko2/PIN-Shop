@@ -1,6 +1,6 @@
 <?php
-include '../database/connection.php';
-include '../classes/Artikl.php';
+include '../../database/connection.php';
+include '../../classes/Artikl.php';
 // include "../path_helper.php";
 // include (ROOT ."\\database\\connection.php");
 // include (ROOT ."\\classes\\Artikl.php");

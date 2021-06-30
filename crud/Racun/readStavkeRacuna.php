@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../database/connection.php';
-include '../classes/Stavka.php';
+include '../../database/connection.php';
+include '../../classes/Stavka.php';
 header('Content-Type: text/html; charset=utf-8');
 header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');

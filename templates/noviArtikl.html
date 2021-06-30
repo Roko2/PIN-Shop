@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
               <label for="dodajKolicinaArtikl">Količina</label>
-              <input type="number" id="dodajKolicinaArtikl" class="form-control w-25" name="kolicinaArtikla">
+              <input type="number" id="dodajKolicinaArtikl" class="form-control w-25" min="1" name="kolicinaArtikla">
             </div>
             <div class="form-group">
               <label for="dodajCijenaArtikla">Cijena (HRK)</label>
@@ -33,17 +33,3 @@
     </form>
  </div>
 
- <div id="tost" aria-live="polite" aria-atomic="true">
-    <div id="tostDodavanje" class="toast" data-animation="true" data-delay="3000">
-      <div class="toast-header">
-        <span><i class="fas fa-comment" aria-hidden="true"></i></span>
-        <strong class="mr-auto">Obavijest</strong>
-        <small class="text-muted ml-2">upravo sada</small>
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="toast-body">
-        {{obavijestDodavanje.poruka}}
-      </div>
-</div>

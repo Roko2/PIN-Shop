@@ -111,7 +111,7 @@
               <tr ng-repeat="oStavke in vStavke">
                   <td class="align-middle">{{$index+1}}</td>
                   <td class="align-middle">{{oStavke.m_sNazivArtikla}}</td>
-                  <td class="align-middle">{{oStavke.odabranaKolicina}}</td>
+                  <td class="align-middle d-flex pt-4">{{oStavke.odabranaKolicina}}<div class="d-flex flex-column"><i ng-click="PovecajKolicinu(oStavke.m_nIdArtikla)" class="fa fa-plus ml-2"></i><i ng-click="SmanjiKolicinu(oStavke.m_nIdArtikla)" class="fa fa-minus ml-2"></i></div></td>
                   <td class="align-middle">{{oStavke.ukupnaCijena}}</td>
                   <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiStavkuRacuna(this)" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
               </tr>
@@ -124,7 +124,7 @@
           <div class="d-inline d-block float-right">Ukupna cijena: <b ng-class="{dodajPopust: popustRacuna>0}">{{ukupnaCijenaRacuna}}</b> KN</div><br>
           <div ng-class="{popustenaCijena: popustRacuna>0}" ng-if="popustRacuna>0" class="d-block float-right">{{ukupnaCijenaRacuna-((ukupnaCijenaRacuna*popustRacuna)/100) | number: 2}} KN</div>
           <div ng-class="{onemoguciGumb: vStavke.length<1}" class="mt-3 ml-1"><button class="gumbPopust" data-toggle="modal" data-target="#modalPopust"><span>Popust <i class="fa fa-percent ml-2" aria-hidden="true"></i></span></button></div>
-          <div class="text-center mt-3"><button ng-class="{onemoguciGumb: vStavke.length < 1}" data-toggle="modal" data-target="#modalPotvrda" ng-click="IzradiRacunPotvrda()" class="btn btn-primary w-25">Izradi račun</button></div>
+          <div class="text-center mt-3"><button id="gumbIzradiRacun" ng-class="{onemoguciGumb: vStavke.length < 1}" data-toggle="modal" data-target="#modalPotvrda" ng-click="IzradiRacunPotvrda()" class="btn btn-primary w-25">Izradi račun</button></div>
         </div>
       </div>
     </div>
@@ -154,7 +154,7 @@
 </div>
 
 <!--------------------------------TOST OBAVIJEST------------------------------------------->
-<div id="tost" aria-live="polite" aria-atomic="true">
+<div id="tost" class="position-fixed bottom-0 right-0 p-3" aria-live="polite" aria-atomic="true">
   <div id="tostDodavanje" class="toast" data-animation="true" data-delay="3000">
     <div class="toast-header">
       <span><i class="fas fa-comment" aria-hidden="true"></i></span>

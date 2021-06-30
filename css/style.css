@@ -634,16 +634,11 @@ table,th,td {
   cursor: not-allowed;
 }
 
-.toast{
-  position: absolute !important; 
-  top:75%;
+#tost{
+  z-index: 5;
   right: 0;
+  bottom:50px;
 }
-
-/* #tost{
-  position: relative !important; 
-  min-height: 200px !important;
-} */
 
 .divGumbRacuni{
   margin-top: 50%;
@@ -809,4 +804,11 @@ table,th,td {
 .popustenaCijena{
   color: red;
   font-size: 20px;
+}
+.fa-cart-plus{
+  font-size: 23px;
+}
+.dataTables_info,
+.dataTables_length {
+color: white;
 }

@@ -1,0 +1,82 @@
+<div class="tableContainer p-5 mb-5 rounded ">
+    <button class="ml-auto btn btn-success rounded">Dodaj zaposlenika</button>
+    <h3 class="mx-auto text-white text-center mt-3">Zaposlenici</h3>
+      <table id="tablicaZaposlenici" class="table table-responsive mx-auto text-white text-center w-100" ng-init="DohvatiZaposlenike()">
+        <thead style="background-color: #B61624;">
+          <tr>
+              <th class="align-middle">Rbr</th>
+              <th class="align-middle">OIB</th>
+              <th class="align-middle">Ime</th>
+              <th class="align-middle">Prezime</th>
+              <th class="align-middle">Spol</th>
+              <th class="align-middle">Datum rođenja</th>
+              <th class="align-middle">Email</th>
+              <th class="align-middle">Plaća</th>
+              <th class="align-middle">Uloga</th>
+              <th class="align-middle">Godina staža</th>
+              <th class="align-middle">Ažuriraj</th>
+              <th class="align-middle">Otpusti</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="zaposlenik in vZaposlenici" ng-if="zaposlenik.m_sUloga=='Prodavač'"> 
+              <td class="align-middle">{{$index+1}}</td>
+              <td class="align-middle">{{zaposlenik.m_nOib}}</td>
+              <td class="align-middle">{{zaposlenik.m_sIme}}</td>
+              <td class="align-middle">{{zaposlenik.m_sPrezime}}</td>
+              <td class="align-middle" ng-if="zaposlenik.m_sSpol=='0'">Muško</td>
+              <td class="align-middle" ng-if="zaposlenik.m_sSpol=='1'">Žensko</td>
+              <td class="align-middle">{{zaposlenik.m_nDatumRodjenja | date:'d.M.yyyy.'}}</td>
+              <td class="align-middle">{{zaposlenik.m_sEmail}}</td>
+              <td class="align-middle">{{zaposlenik.m_fPlaca}}</td>
+              <td class="align-middle">{{zaposlenik.m_sUloga}}</td>
+              <td class="align-middle">{{zaposlenik.m_nGodinaStaza}}</td>
+              <td class="align-middle"><button class="btn gumbTablica text-white plaviGumbTablice mr-1" data-toggle="modal" data-target="#modalAzuriranjeZaposlenika"><i class="fa fa-wrench" aria-hidden="true"></i></button></td>
+              <td class="align-middle"><button id="gumbObrisi" class="btn gumbTablica text-white mr-1"><i class="fa fa-ban" data-toggle="modal" data-target="#modalOtkaz" aria-hidden="true"></i></button></td>
+            </tr>
+      </tbody>
+      </table>
+  </div>
+
+  <!------------------------------------------MODAL AŽURIRANJE ZAPOSLENIKA--------------------------------------------------- -->
+<div class="modal fade" id="modalAzuriranjeZaposlenika" tabindex="-1" role="dialog" aria-labelledby="modalAzuriranjeZaposlenika" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title text-warning my-auto">Ažuriranje zaposlenika</h5>
+          <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+            <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body font-weight-bold">
+          <form id="azuriranjeZaposlenikaForma">
+              <input type="text" name="emailZaposlenika" ng-model="oZaposlenikForma.email" hidden>
+              <div class="form-group">
+                <label for="updateImeZaposlenika">Ime</label>
+                <input type="text" class="form-control w-50" id="updateImeZaposlenika" name="imeZaposlenika" ng-model="oZaposlenikForma.ime">
+              </div>
+              <div class="form-group">
+                <label for="updatePrezimeZaposlenika">Prezime</label>
+                <input  id="updatePrezimeZaposlenika" class="form-control w-50" name="prezimeZaposlenika" ng-model="oZaposlenikForma.prezime"></input>
+              </div>
+              <div class="form-group">
+                <label for="updatePlacaZaposlenika">Plaća</label>
+                <input type="number" id="updatePlacaZaposlenika" class="form-control w-25" min="0" name="placaZaposlenika" ng-model="oZaposlenikForma.placa">
+              </div>
+              <div class="form-group">
+                <label for="updateUlogaZaposlenika">Uloga</label>
+                <input type="text" id="updateUlogaZaposlenika" class="form-control w-25" name="ulogaZaposlenika" ng-model="oZaposlenikForma.uloga">
+              </div>
+              <div class="form-group">
+                <label for="updateGodinaStazaZaposlenka">Godina staža</label>
+                <input id="updateGodinaStazaZaposlenka" class="form-control w-25" name="godinaStazaZaposlenika" ng-model="oZaposlenikForma.godinaStaza" type="number" min="0" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+              </div>
+              <div class="mt-3 text-center">
+              <button class="btn btn-primary" data-target="#modalPotvrda" data-toggle="modal" ng-click="AzurirajZaposlenika()">Ažuriraj</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+        </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
