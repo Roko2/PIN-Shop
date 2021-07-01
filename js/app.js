@@ -686,11 +686,11 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
   obrisan=false;
   $scope.$on('$routeChangeStart', function($event, next, current) { 
     if(next.$$route.templateUrl=="templates/potkategorije.html" ){
-      $scope.init();
       if(obrisan==true){
-      $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));
+        $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));
       }
     }
+    $scope.init();
   });
   //------------------------inicijaliziranje tablice artikala ispisanih po odabranoj kategoriji-----------------------------
   $scope.PosaljiIdPotkategorije=function(idPotkategorije){
@@ -702,12 +702,13 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
       headers: {'Content-Type': 'application/json'},
       data: JSON.stringify(oPotkategorija)
     }).then(function(response){
-      $scope.vArtikliPotkategorije=response.data;
-      try{$scope.kategorijaArtikla=response.data[0].m_nIdPotkategorijaArtikla;}catch(e){};
-        if($scope.vArtikliPotkategorije.length>0 && obrisan==false){
+      $scope.kategorijaArtikla=response.data[0].m_nIdPotkategorijaArtikla;
+      if($scope.vArtikliPotkategorije.length>0 && obrisan==false){
         $('#tablicaArtikli').DataTable().clear().destroy();
         obrisan=true;
       }
+      $scope.vArtikliPotkategorije=response.data;
+      $window.localStorage.setItem("potkategorija",idPotkategorije);
       $timeout(function () {
         $('#tablicaArtikli').DataTable({
             "searching": true,
@@ -715,7 +716,6 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
             columnDefs: [ { orderable: false, targets: [5,6,7] }, { searchable: false, targets: [5,6,7] } ]
           }); 
     }); 
-    $window.localStorage.setItem("potkategorija",idPotkategorije);
     }),function(response){
     };
       }
@@ -787,7 +787,7 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
         $scope.vKategorije=results[0].data;
         $scope.vArtikli=results[1].data;
         $scope.vPotkategorije=results[2].data; 
-        if($window.localStorage.getItem("potkategorija")!=""){
+        if($window.localStorage.getItem("potkategorija")!="" && $window.localStorage.getItem("potkategorija")!=null){
           $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));   
          }
     });
