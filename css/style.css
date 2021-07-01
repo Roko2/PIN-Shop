@@ -42,6 +42,9 @@ span{
   transition: 0.3s !important;
   cursor: pointer;
 }
+.modalDialog{
+  position: absolute;
+}
 .naslovi{
   font-weight: bold !important;
 }
@@ -865,3 +868,8 @@ color: white;
   min-height: 50px;
   display: inline-block;
   }
+  #LozinkaIIkona{
+    display: flex;
+    justify-content: space-between;
+  }
+ 

@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 ini_set('memory_limit', '2048M');
 $data=json_decode(file_get_contents('php://input'));
 $vZaposlenici=array();
-$sQuery="SELECT * FROM zaposlenik WHERE StatusZap=1";
+$sQuery="SELECT * FROM zaposlenik WHERE StatusZap=1 AND Uloga='Prodavač'";
 $oRecord = $oConnection->query($sQuery);
 while($oRow = $oRecord->fetch(PDO::FETCH_BOTH))
 {

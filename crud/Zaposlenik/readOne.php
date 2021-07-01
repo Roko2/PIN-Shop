@@ -7,6 +7,7 @@ ini_set('memory_limit', '2048M');
 $data=json_decode(file_get_contents('php://input'));
 $sQuery="SELECT * FROM zaposlenik WHERE Email=:email";
 $oStatement = $oConnection->prepare($sQuery);
+$data->email = htmlspecialchars(strip_tags($data->email));
 $oStatement->bindParam(':email',$data->email);
 $oStatement->execute();
 $oRow = $oStatement->fetch(PDO::FETCH_ASSOC);      

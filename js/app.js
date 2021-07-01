@@ -59,6 +59,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   $scope.rezultat=0;
   //---------------Poziv API-ja za dodavanje novog zaposlenika--------------------------
   $scope.DodavanjeZaposlenikaPotvrda=function(){
+    $("body").css("overflow-y","hidden");
     dodajZaposlenika=true;
     const ime=document.getElementById('dodavanjeImeZaposlenika');
     const prezime=document.getElementById('dodavanjePrezimeZaposlenika');
@@ -114,6 +115,48 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
     if(!(/^\d+$/.test(parseInt(godinaStaza.value))) || isNaN(parseInt(godinaStaza.value))){
       PostaviGresku(godinaStaza,"Godina staža mora biti cjelobrojni broj");
       dodajZaposlenika=false;
+    }
+    else{
+      PostaviValjano(godinaStaza);
+    }
+    if(lozinka.value.trim()==""){
+      PostaviGresku(lozinka,"Lozinka ne smije biti prazna");
+      dodajZaposlenika=false;
+    }
+    else{
+      PostaviValjano(lozinka);
+    }
+    if(dodajZaposlenika){
+      oProvjeraZaposlenik={zaposlenikOIB:oib.value,zaposlenikEmail:email.value};
+      $http({
+        url:'./query/provjeraZaposlenika.php',
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        data: JSON.stringify(oProvjeraZaposlenik)
+      }).then(function(response){
+        if(response.data==0){
+          const greska=document.getElementById("ZaposlenikGreska");
+           PostaviGresku(greska,"Email ili oib koji ste unijeli već postoje");
+          dodajZaposlenika=false;
+          }
+          if(dodajZaposlenika){
+            oZaposlenik=getFormData($("#dodajZaposlenikaForma"));
+            oZaposlenik.ulogaZaposlenika="Prodavač";
+            oZaposlenik.statusZaposlenika=1;
+            console.log(oZaposlenik);
+            $http({
+              url:'./crud/Zaposlenik/create.php',
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              data: oZaposlenik
+            }).then(function(response){
+              $scope.obavijestDodavanje={poruka:response.data};
+              $('#tostDodavanje').toast('show');
+              $('#modalDodavanjeZaposlenika').modal('hide');
+              $scope.DohvatiZaposlenike();
+            }),function(response){};
+          }
+      }),function(response){};
     }
   }
   //----------------Popunjavanje template modala za dodavanje zaposenika-----------------
@@ -805,7 +848,6 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
 
   function PostaviGresku(element,poruka){
     const formGrupa=element.parentElement;
-    console.log(formGrupa);
     const tekst=formGrupa.querySelector('small');
     formGrupa.className='form-group error';
     tekst.innerText=poruka;
