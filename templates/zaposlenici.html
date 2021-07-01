@@ -1,5 +1,5 @@
 <div class="tableContainer p-5 mb-5 rounded ">
-    <button class="ml-auto btn btn-success rounded">Dodaj zaposlenika</button>
+    <button class="ml-auto btn btn-dodaj rounded" data-toggle="modal" data-target="#modalDodavanjeZaposlenika">Dodaj zaposlenika</button>
     <h3 class="mx-auto text-white text-center mt-3">Zaposlenici</h3>
       <table id="tablicaZaposlenici" class="table table-responsive mx-auto text-white text-center w-100" ng-init="DohvatiZaposlenike()">
         <thead style="background-color: #B61624;">
@@ -31,8 +31,8 @@
               <td class="align-middle">{{zaposlenik.m_fPlaca}}</td>
               <td class="align-middle">{{zaposlenik.m_sUloga}}</td>
               <td class="align-middle">{{zaposlenik.m_nGodinaStaza}}</td>
-              <td class="align-middle"><button class="btn gumbTablica text-white plaviGumbTablice mr-1" data-toggle="modal" data-target="#modalAzuriranjeZaposlenika"><i class="fa fa-wrench" aria-hidden="true"></i></button></td>
-              <td class="align-middle"><button id="gumbObrisi" class="btn gumbTablica text-white mr-1"><i class="fa fa-ban" data-toggle="modal" data-target="#modalOtkaz" aria-hidden="true"></i></button></td>
+              <td class="align-middle"><button class="btn gumbTablica text-white plaviGumbTablice mr-1" data-toggle="modal" data-target="#modalAzuriranjeZaposlenika" ng-click="AzuriranjeZaposlenikaForma(zaposlenik.m_sEmail)"><i class="fa fa-wrench" aria-hidden="true"></i></button></td>
+              <td class="align-middle"><button id="gumbObrisi" class="btn gumbTablica text-white mr-1"><i class="fa fa-ban" data-toggle="modal" data-target="#modalPotvrda" ng-click="OtpustiZaposlenika(zaposlenik.m_nOib,zaposlenik.m_sEmail,zaposlenik.m_sIme,zaposlenik.m_sPrezime)" aria-hidden="true"></i></button></td>
             </tr>
       </tbody>
       </table>
@@ -51,28 +51,53 @@
         <div class="modal-body font-weight-bold">
           <form id="azuriranjeZaposlenikaForma">
               <input type="text" name="emailZaposlenika" ng-model="oZaposlenikForma.email" hidden>
+              <div class="row">
+                <div class="col-sm-12">
               <div class="form-group">
                 <label for="updateImeZaposlenika">Ime</label>
                 <input type="text" class="form-control w-50" id="updateImeZaposlenika" name="imeZaposlenika" ng-model="oZaposlenikForma.ime">
+                <small class="ml-3"></small>
               </div>
+              </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
               <div class="form-group">
                 <label for="updatePrezimeZaposlenika">Prezime</label>
                 <input  id="updatePrezimeZaposlenika" class="form-control w-50" name="prezimeZaposlenika" ng-model="oZaposlenikForma.prezime"></input>
+                <small class="ml-3"></small>
               </div>
+              </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">	
               <div class="form-group">
                 <label for="updatePlacaZaposlenika">Plaća</label>
-                <input type="number" id="updatePlacaZaposlenika" class="form-control w-25" min="0" name="placaZaposlenika" ng-model="oZaposlenikForma.placa">
+                <input type="text" id="updatePlacaZaposlenika" class="form-control w-25" name="placaZaposlenika" ng-model="oZaposlenikForma.placa">
+                <small class="ml-3"></small>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
                 <label for="updateUlogaZaposlenika">Uloga</label>
                 <input type="text" id="updateUlogaZaposlenika" class="form-control w-25" name="ulogaZaposlenika" ng-model="oZaposlenikForma.uloga">
+                <small class="ml-3"></small>
               </div>
+              </div>
+              </div>  
+              <div class="row">
+                <div class="col-sm-12">
               <div class="form-group">
                 <label for="updateGodinaStazaZaposlenka">Godina staža</label>
-                <input id="updateGodinaStazaZaposlenka" class="form-control w-25" name="godinaStazaZaposlenika" ng-model="oZaposlenikForma.godinaStaza" type="number" min="0" onkeydown="return false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                <input id="updateGodinaStazaZaposlenka" class="form-control w-25" name="godinaStazaZaposlenika" ng-model="oZaposlenikForma.godinaStaza" type="number" min="0">
+                <small class="ml-3"></small>
               </div>
+                </div>
+                </div>
               <div class="mt-3 text-center">
-              <button class="btn btn-primary" data-target="#modalPotvrda" data-toggle="modal" ng-click="AzurirajZaposlenika()">Ažuriraj</button>
+              <button class="btn btn-primary" data-target="#modalPotvrda" data-toggle="modal" ng-click="ZaposlenikAzuriraj()">Ažuriraj</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
         </div>
             </form>
@@ -80,3 +105,126 @@
       </div>
     </div>
   </div>
+
+ <!-- ---------------------------------------------------MODAL DODAVANJE ZAPOSLENIKA -------------------------------------------------------------->
+ <div class="modal fade" id="modalDodavanjeZaposlenika" tabindex="-1" role="dialog" aria-labelledby="modalDodavanjeZaposlenika" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title text-warning my-auto">Zapošljavanje</h5>
+        <button type="button" class="close my-auto" data-dismiss="modal" aria-label="Close">
+          <span class="text-white bg-dark"><i aria-hidden="true" class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body font-weight-bold">
+        <form id="dodajZaposlenikaForma">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="dodavanjeImeZaposlenika">Ime</label>
+                  <input type="text" class="form-control w-50" placeholder="Ime" id="dodavanjeImeZaposlenika" name="imeZaposlenika">
+                  <small class="ml-3"></small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+               <div class="form-group">
+                  <label for="dodavanjePrezimeZaposlenika">Prezime</label>
+                  <input  id="dodavanjePrezimeZaposlenika" placeholder="Prezime" class="form-control w-50" name="prezimeZaposlenika"></input>
+                  <small class="ml-3"></small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">	
+                <div class="form-group">
+                  <label for="dodavanjeOIBZaposlenika">OIB</label>
+                  <input type="text" placeholder="Oib" id="dodavanjeOIBZaposlenika" class="form-control w-25" name="oibZaposlenika">
+                  <small class="ml-3"></small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="dodavanjeDatumRodjenjaZaposlenik">Datum rođenja</label>
+                  <div class="input-group date w-25" data-provide="datepicker">
+                  <input id="dodavanjeDatumRodjenjaZaposlenik" placeholder="Datum rođenja" class="form-control w-25" name="datumRodjenjaZaposlenika">
+                  <small class="ml-3"></small>
+                  <div class="input-group-addon"></div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="dodavanjeEmailZaposlenika">Email</label>
+                  <input type="text" class="form-control w-50" placeholder="primjer@pinshop.hr" name="emailZaposlenika" id="dodavanjeEmailZaposlenika">
+                  <small class="ml-3"></small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="font-weight-bold" for="dodavanjeLozinkaZaposlenik">Lozinka</label>
+                    <div class="input-group w-50">
+                  <input type="password" class="form-control bg-white text-dark" data-toggle="password" name="lozinkaZaposlenika" placeholder="Lozinka..." id="dodavanjeLozinkaZaposlenik">
+                  <div class="input-group-append">
+                         <span class="input-group-text h-75">
+                        <i class="fa fa-eye"></i>
+                       </span>
+                  </div>
+                  <div id="guranjePorukeGreska"></div>
+                      <small class="form-text ml-3 mt-4"></small>
+                    </div>
+                  </div>
+              </div>
+          </div>
+            <div class="row">
+              <div class="col-sm-12">
+                 <div class="form-group">
+                  <label for="dodavanjePlacaZaposlenika">Plaća</label>
+                  <input type="text" placeholder="Plaća" id="dodavanjePlacaZaposlenika" class="form-control w-25" name="placaZaposlenika" >
+                  <small class="ml-3"></small>
+                 </div>
+               </div>
+              </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                     <div class="form-group">
+                      <label for="dodavanjeGodinaStazaZaposlenka">Godina staža</label>
+                      <input id="dodavanjeGodinaStazaZaposlenka" placeholder="Godina staža" class="form-control w-25" name="godinaStazaZaposlenika" type="number" min="0">
+                      <small class="ml-3"></small>
+                     </div>
+                   </div>
+                  </div>  
+               <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="dodavanjeSpolZaposlenika">Spol</label>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="dodavanjeSpolZaposlenik" checked>Muško
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="dodavanjeSpolZaposlenik">Žensko
+                        </label>
+                      </div>
+                      <small class="ml-3"></small>
+                  </div>
+                </div>
+              </div>
+            <div class="mt-3 text-center">
+            <button class="btn btn-primary" data-target="#modalPotvrda" data-toggle="modal" ng-click="ZaposlenikDodaj()">Zaposli</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+      </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>

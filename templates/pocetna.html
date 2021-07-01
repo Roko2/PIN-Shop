@@ -4,14 +4,13 @@
         <div class="div2 col-sm-4 my-auto">
             <h3 class="d-block mb-4">Dobrodošli</h3>
             <div class="d-block mb-4 h4">{{oOsoba.m_sIme}} {{oOsoba.m_sPrezime}}</div>
-            <div class="d-block mt-5"><button class="btn btn-success w-75">Provjerite svoju statistiku</button></div>
     </div>
         <div class="div3 col-sm-4 my-auto">
-            <p class="h4 text-monospace akcije">Akcije</p>
+            <h4 class="akcije">Akcije</h4>
             <div class="d-block divGumbRacuni my-auto">
-                <a href="#!/zaposlenici" ng-if="oOsoba.m_sUloga=='Direktor'"><button class="btn btn-primary w-50 mt-4">Zaposlenici</button></a>
-                <a href="#!/racuni"><button class="btn btn-primary w-50 mt-4">Računi</button></a>
-                <a href="#!/neaktivniArtikli"><button class="btn btn-primary w-50 mt-4">Neaktivni artikli</button></a>
+                <a class="pocetnaLinkovi" href="#!/zaposlenici" ng-if="oOsoba.m_sUloga=='Direktor'"><button class="btn btn-akcija w-50 mt-4">Zaposlenici</button></a>
+                <a class="pocetnaLinkovi" href="#!/racuni"><button class="btn btn-akcija w-50 mt-4">Računi</button></a>
+                <a class="pocetnaLinkovi" href="#!/neaktivniArtikli"><button class="btn btn-akcija w-50 mt-4">Neaktivni artikli</button></a>
             </div>
         </div>
     </div>

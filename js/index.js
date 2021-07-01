@@ -57,20 +57,16 @@ $('#pocetna').click(function(){
     }
 }
 
-  setTimeout(function () {
-    $(function () {
-      
-    });
-  }, 100);
-
 $(document).ready(function(){
   $(function() {
     $('.tooltip-wrapper').tooltip({position: "bottom"});
 });
   var datum=new Date();
   var trenutnaGodina=datum.getFullYear();
+  var trenutnaGodina=datum.getFullYear();
   var row="<b>© Copyright "+trenutnaGodina+"</b>";
   $("#copyright").append(row);
+  $("#dodavanjeDatumRodjenjaZaposlenik").attr("max",)
   $("#vratiNaPocetnu").on('click',function(){
     window.location.href="#!/";
     // const cartButtons = document.querySelectorAll('.cart-button');

@@ -10,6 +10,6 @@ $oStatement = $oConnection->prepare($sQuery);
 $oStatement->bindParam(':email',$data->email);
 $oStatement->execute();
 $oRow = $oStatement->fetch(PDO::FETCH_ASSOC);      
-$oZaposlenik=new Zaposlenik($oRow['Email'],$oRow['Uloga'],$oRow['Placa'],$oRow['GodinaStaza'],$oRow['Lozinka'],$oRow['TajniKljuc'],$oRow['OIB'],$oRow['Ime'],$oRow['Prezime'],$oRow['Spol'],$oRow['DatumRodjenja']);
+$oZaposlenik=new Zaposlenik($oRow['Email'],$oRow['Uloga'],number_format((float)$oRow['Placa'], 2, '.', ''),$oRow['GodinaStaza'],$oRow['Lozinka'],$oRow['TajniKljuc'],$oRow['StatusZap'],$oRow['OIB'],$oRow['Ime'],$oRow['Prezime'],$oRow['Spol'],$oRow['DatumRodjenja']);
 echo(json_encode($oZaposlenik));
 ?>

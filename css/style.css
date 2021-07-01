@@ -8,7 +8,9 @@ body{
 h1,h2,h3,h4,h5{
 	font-family: 'Merriweather',serif;
 }
-
+small{
+  font-weight: bold;
+}
 .parallax {
   position: relative;
   min-height: 200px; 
@@ -472,14 +474,7 @@ table,th,td {
   height: 90%;
   border-right-color: white;
 }
-/*
-.div2 {
-  width:200px;
-  height:200px;
-  background:white;
-  left: 50%;
-}
-*/
+
 .div3 {
   border-left-style: solid;
   height: 90%;
@@ -644,7 +639,7 @@ table,th,td {
   margin-top: 50%;
 }
 .akcije{
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .wrapper {
@@ -812,3 +807,61 @@ table,th,td {
 .dataTables_length {
 color: white;
 }
+
+.btn-akcija {background-image: linear-gradient(to right, #00c6ff 0%, #0072ff  51%, #00c6ff  100%)}
+.btn-akcija {
+   text-align: center;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;            
+   border-radius: 10px;
+   
+ }
+
+ .btn-akcija:hover {
+   background-position: right center;
+   color: #fff;
+   font-weight: bold;
+   text-decoration: none;
+ }
+.pocetnaLinkovi{
+  text-decoration: none !important;
+}
+
+.btn-dodaj {background-image: linear-gradient(to right, #0575E6 0%, #021B79  51%, #0575E6  100%)}
+.btn-dodaj {
+   text-align: center;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;            
+   border-radius: 10px;
+ }
+
+ .btn-dodaj:hover {
+   background-position: right center;
+   color: #fff;
+   font-weight: bold;
+   text-decoration: none;
+ }
+
+ .form-group small {
+	color: #e74c3c !important;
+	position: absolute ;
+	bottom: 0;
+	left: 0;
+	visibility: hidden !important;
+}
+.form-group.success input {
+	border-color: #2ecc71 !important;
+}
+
+.form-group.error input {
+	border-color: #e74c3c !important;
+}
+.form-group.error small {
+	visibility: visible !important;
+}
+#guranjePorukeGreska{
+  min-height: 50px;
+  display: inline-block;
+  }
