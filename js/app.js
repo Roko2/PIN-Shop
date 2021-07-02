@@ -196,25 +196,22 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   //---------------Povecavanje kolicine stavke u košarici--------------------------
   $scope.SmanjiKolicinu=function(idArtikla){
     for(var i=0;i<$scope.vStavke.length;i++){
-       if($scope.vStavke[i].m_nIdArtikla==idArtikla){
-         if($scope.vStavke[i].odabranaKolicina>1){
+       if($scope.vStavke[i].m_nIdArtikla==idArtikla && $scope.vStavke[i].odabranaKolicina>1){
            $scope.vStavke[i].odabranaKolicina-=1;
            $scope.vStavke[i].ukupnaCijena=parseFloat($scope.vStavke[i].m_fJdCijenaArtikla)*parseFloat($scope.vStavke[i].odabranaKolicina);
            $scope.vStavke[i].ukupnaCijena= $scope.vStavke[i].ukupnaCijena.toFixed(2);
-         }
        }
      }
      IzracunajRacun();
    }
   //---------------Povecavanje kolicine stavke u košarici--------------------------
-  $scope.PovecajKolicinu=function(idArtikla){
+  $scope.PovecajKolicinu=function(idArtikla,kvantiteta){
    for(var i=0;i<$scope.vStavke.length;i++){
-      if($scope.vStavke[i].m_nIdArtikla==idArtikla){
-        if($scope.vStavke[i].odabranaKolicina<$scope.kvantitetaArtikla){
+      if($scope.vStavke[i].m_nIdArtikla==idArtikla && $scope.vStavke[i].odabranaKolicina<kvantiteta){
+        
           $scope.vStavke[i].odabranaKolicina+=1; 
           $scope.vStavke[i].ukupnaCijena=parseFloat($scope.vStavke[i].m_fJdCijenaArtikla)*parseFloat($scope.vStavke[i].odabranaKolicina);
           $scope.vStavke[i].ukupnaCijena= $scope.vStavke[i].ukupnaCijena.toFixed(2);
-        }
       }
     }
     IzracunajRacun();

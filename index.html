@@ -112,7 +112,7 @@
               <tr ng-repeat="oStavke in vStavke">
                   <td class="align-middle">{{$index+1}}</td>
                   <td class="align-middle">{{oStavke.m_sNazivArtikla}}</td>
-                  <td class="align-middle d-flex pt-4">{{oStavke.odabranaKolicina}}<div class="d-flex flex-column"><i ng-click="PovecajKolicinu(oStavke.m_nIdArtikla)" class="fa fa-plus ml-2"></i><i ng-click="SmanjiKolicinu(oStavke.m_nIdArtikla)" class="fa fa-minus ml-2"></i></div></td>
+                  <td class="align-middle d-flex pt-4">{{oStavke.odabranaKolicina}}<div class="d-flex flex-column"><i ng-click="PovecajKolicinu(oStavke.m_nIdArtikla,oStavke.m_nKvantitetaArtikla)" class="fa fa-plus ml-2"></i><i ng-click="SmanjiKolicinu(oStavke.m_nIdArtikla)" class="fa fa-minus ml-2"></i></div></td>
                   <td class="align-middle">{{oStavke.ukupnaCijena}}</td>
                   <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiStavkuRacuna(this)" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
               </tr>
