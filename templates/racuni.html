@@ -8,7 +8,6 @@
               <th class="align-middle">Datum</th>
               <th class="align-middle" style="min-width: 130px;">Iznos (HRK)</th>
               <th class="align-middle">Detalji računa</th>
-              <th class="align-middle">Brisanje</th>
           </tr>
       </thead>
       <tbody>
@@ -18,7 +17,6 @@
               <td class="align-middle" style="min-width: 130px;">{{racun.m_sDatum}}</td>
               <td class="align-middle">{{racun.m_fUkupanIznos}}</td>
               <td class="align-middle"><button data-toggle="modal" class="btn gumbTablica text-white d-inline plaviGumbTablice" data-target="#modalDetaljiRacuna" ng-click="DetaljiRacuna(racun.m_nSifraRacuna,racun.m_nPopust)" title="Kliknite za detalje"><i class="fas fa-info-circle" aria-hidden="true"></i></button></td>
-              <td class="align-middle"><button id="gumbObrisi" ng-click="ObrisiRacun(racun.m_nSifraRacuna)" data-toggle="modal" data-target="#modalPotvrda" class="btn btn-primary gumbTablica text-white d-inline"><i class="fa fa-trash d-inline mr-1" aria-hidden="true"></i></button></td>
             </tr>
       </tbody>
       </table>

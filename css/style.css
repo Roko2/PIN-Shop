@@ -873,3 +873,25 @@ color: white;
     justify-content: space-between;
   }
  
+  
+  .btn-stat {background-image: linear-gradient(to right, #134E5E 0%, #71B280  51%, #134E5E  100%)}
+  .btn-stat {
+     text-align: center;
+     transition: 0.5s;
+     background-size: 200% auto;
+     color: white;            
+     border-radius: 10px;
+   }
+
+   .btn-stat:hover {
+     background-position: right center;
+     color: #fff;
+     text-decoration: none;
+     font-weight: bold;
+   }
+  
+#statistikaContainer{
+    box-sizing: border-box;
+    height: 30% !important;
+   }
+   

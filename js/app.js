@@ -1,5 +1,5 @@
 // ------------Inicijaliziranje modula-------------------------------
-var pcShop = angular.module('pcShop', ["ngRoute","ngSanitize"]);
+var pcShop = angular.module('pcShop', ["ngRoute","ngSanitize","ng-fusioncharts"]);
 
 //--------------Postavljanje ruta-----------------------------------
 pcShop.config(function($routeProvider){
@@ -21,13 +21,16 @@ pcShop.config(function($routeProvider){
    $routeProvider.when('/neaktivniArtikli',{
      templateUrl: 'templates/neaktivniArtikli.html'
    });
+   $routeProvider.when('/statistika',{
+     templateUrl:'templates/statistika.html'
+   });
    $routeProvider.otherwise({
     templateUrl: 'templates/error.html'
    });
    });
 
 //-----------------------------------implementacija funkcija i odnosa u glavnom kontroleru-----------------------------------
-pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,$compile,$route) {
+pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,$compile) {
   $scope.funkcijaTest;
   $scope.vKategorije=[];
   $scope.vArtikli=[];
@@ -56,7 +59,32 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   $scope.provjeraKolicine;
   $scope.popustRacunBaza;
   $scope.odabranaKolicinaStavkeRacun;
+  $scope.statistikaUkArtikala;
+  $scope.statistikaNeaktivniArtikli;
+  $scope.statistikaNajtrazenijiArtikl;
+  $scope.statistikaBrojZaposlenika;
+  $scope.statistikaZarada,
   $scope.rezultat=0;
+  $scope.dataSource = {
+    "chart": {
+        "caption": "Statistika artikala u trgovini",
+        "subCaption": "In MMbbl = One Million barrels",
+        "xAxisName": "Country",
+        "yAxisName": "Reserves (MMbbl)",
+        "numberSuffix": "K",
+        "theme": "fusion",
+    },
+    "data": [
+        { "label": "Venezuela", "value": "290" },
+        { "label": "Saudi", "value": "260" },
+        { "label": "Canada", "value": "180" },
+        { "label": "Iran", "value": "140" },
+        { "label": "Russia", "value": "115" },
+        { "label": "UAE", "value": "100" },
+        { "label": "US", "value": "30" },
+        { "label": "China", "value": "30"}
+    ]
+};
   //---------------Poziv API-ja za dodavanje novog zaposlenika--------------------------
   $scope.DodavanjeZaposlenikaPotvrda=function(){
     $("body").css("overflow-y","hidden");
@@ -177,10 +205,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
         autoclose: true
       });
     });
-    $http({
-      url:'./crud/Zaposlenik/read.php',
-      method:'GET'
-    }).then(function(response){
+
       try{$('#tablicaZaposlenici').DataTable().clear().destroy();}
         catch(e){};
         $scope.vZaposlenici=response.data;
@@ -191,7 +216,6 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
           columnDefs: [ { orderable: false, targets: [4,8,10,11] }, { searchable: false, targets: [8,10,11] } ]
           });
         });
-    }),function(response){};
   }
   //---------------Povecavanje kolicine stavke u košarici--------------------------
   $scope.SmanjiKolicinu=function(idArtikla){
@@ -758,6 +782,31 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
     }),function(response){
     };
   }
+  // Statistika artikala
+  $scope.Statistika=function(){
+    $scope.statistikaUkArtikala=$scope.vArtikli.length;
+    $scope.statistikaNeaktivniArtikli=$scope.vNeaktivniArtikli.length;
+    // $scope.statistikaNajtrazenijiArtikl=$scope.DajNajtrazenijiArtikl(); /TODO
+    $scope.statistikaBrojZaposlenika=$scope.vZaposlenici.length;
+    IzracunajZaradu();
+  };
+
+  // Izracunavanje ukupne zarade sa svih racuna
+  function IzracunajZaradu(){
+    var ukZarada=0;
+    $http({
+      url:'./crud/Racun/read.php',
+      method:'GET'
+    }).then(function(response){
+        $scope.vRacuni=response.data;
+        console.log($scope.vRacuni[0].m_fUkupanIznos);
+    for(var i=0;i<$scope.vRacuni.length;i++){
+      ukZarada+=parseFloat($scope.vRacuni[i].m_fUkupanIznos);
+    }
+    $scope.statistikaZarada=ukZarada.toFixed(2);
+    }),function(response){
+  };
+  };
 
   //------Odjava korisnika iz sustava brisajući njegove podatke iz localstoragea i preusmjeravanje na stranicu prijave---------------
   $scope.Odjava=function(){
@@ -779,11 +828,15 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
   $q.all([
       $http.get("./crud/Kategorija/kategorija.php"),
       $http.get("./crud/Artikl/read.php"),
-      $http.get("./crud/Kategorija/potkategorija.php")
+      $http.get("./crud/Kategorija/potkategorija.php"),
+      $http.get("./crud/Zaposlenik/read.php"),
+      $http.get("./crud/Artikl/readNeaktivniArtikli.php")
     ]).then(function(results) {
         $scope.vKategorije=results[0].data;
         $scope.vArtikli=results[1].data;
         $scope.vPotkategorije=results[2].data; 
+        $scope.vZaposlenici=results[3].data;
+        $scope.vNeaktivniArtikli=results[4].data;
         if($window.localStorage.getItem("potkategorija")!="" && $window.localStorage.getItem("potkategorija")!=null){
           $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));   
          }
@@ -791,14 +844,9 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
   
   //-----------------API za dohvacanje neaktivnih artikala iz baze----------------
   $scope.DohvatiNeaktivneArtikle=function(){
-    $http({
-      url:'./crud/Artikl/readNeaktivniArtikli.php',
-      method:'GET'
-    }).then(function(response){
       if($scope.vNeaktivniArtikli.length>0){
         $('#tablicaNeaktivniArtikli').DataTable().clear().destroy();
       }
-      $scope.vNeaktivniArtikli=response.data;
       $timeout(function(){
         $('#tablicaNeaktivniArtikli').DataTable({
         "searching": true,
@@ -806,8 +854,6 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
         columnDefs: [ { orderable: false, targets: [4] }, { searchable: false, targets: [4] } ]
         });
       });
-     
-    }),function(response){};
   }
   //-----------------API za dohvacanje racuna iz baze--------------------------
   $scope.DohvatiRacune=function(){
@@ -832,24 +878,25 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
   });
 
   //---funkcija za pretvaranje inputa forme i polje objekata čitljivo kao JSON zapis-----------
-  function getFormData($form){
-  var bezindexPolje = $form.serializeArray();
-  var indeksiranoPolje = {};
+function getFormData($form){
+var bezindexPolje = $form.serializeArray();
+var indeksiranoPolje = {};
 
-  $.map(bezindexPolje, function(n, i){
-      indeksiranoPolje[n['name']] = n['value'];
-  });
+$.map(bezindexPolje, function(n, i){
+    indeksiranoPolje[n['name']] = n['value'];
+});
 
-  return indeksiranoPolje;
+return indeksiranoPolje;
+}
+
+function PostaviGresku(element,poruka){
+  const formGrupa=element.parentElement;
+  const tekst=formGrupa.querySelector('small');
+  formGrupa.className='form-group error';
+  tekst.innerText=poruka;
   }
-
-  function PostaviGresku(element,poruka){
-    const formGrupa=element.parentElement;
-    const tekst=formGrupa.querySelector('small');
-    formGrupa.className='form-group error';
-    tekst.innerText=poruka;
-    }
-    function PostaviValjano(poruka) {
-    const formGrupa = poruka.parentElement;
-    formGrupa.className = 'form-group success';
-    }
+  
+function PostaviValjano(poruka) {
+  const formGrupa = poruka.parentElement;
+  formGrupa.className = 'form-group success';
+  }
