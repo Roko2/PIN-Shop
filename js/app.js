@@ -46,6 +46,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   $scope.kategorijaArtikla;
   $scope.vArtikliPotkategorije=[];
   $scope.kvantitetaArtikla;
+  $scope.countArtikli=0;
   $scope.odabranaKategorija;
   $scope.oModalPotvrda={headerModala:"",bodyModala:""};
   $scope.obavijestDodavanje={poruka:""};
@@ -65,26 +66,7 @@ pcShop.controller('mainController', function ($scope,$q, $http,$window,$timeout,
   $scope.statistikaBrojZaposlenika;
   $scope.statistikaZarada,
   $scope.rezultat=0;
-  $scope.dataSource = {
-    "chart": {
-        "caption": "Statistika artikala u trgovini",
-        "subCaption": "In MMbbl = One Million barrels",
-        "xAxisName": "Country",
-        "yAxisName": "Reserves (MMbbl)",
-        "numberSuffix": "K",
-        "theme": "fusion",
-    },
-    "data": [
-        { "label": "Venezuela", "value": "290" },
-        { "label": "Saudi", "value": "260" },
-        { "label": "Canada", "value": "180" },
-        { "label": "Iran", "value": "140" },
-        { "label": "Russia", "value": "115" },
-        { "label": "UAE", "value": "100" },
-        { "label": "US", "value": "30" },
-        { "label": "China", "value": "30"}
-    ]
-};
+  $scope.dataSource;
   //---------------Poziv API-ja za dodavanje novog zaposlenika--------------------------
   $scope.DodavanjeZaposlenikaPotvrda=function(){
     $("body").css("overflow-y","hidden");
@@ -824,6 +806,19 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
     };
   }
 
+  function DohvatiArtiklePoKategoriji(idPotkategorije,parentCategoryID){
+    oPotkategorija={potkategorijaID:idPotkategorije};
+    $http({
+      url: "./crud/Artikl/readArtikliPotkategorije.php",
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      data: JSON.stringify(oPotkategorija)
+    }).then(function(response){
+      console.log(response.data.length);
+      $scope.countArtikli=response.data.length; 
+    }),function(response){
+    };
+  }
   //------------skup GET zahtjeva za dohvaćanje podataka iz baze------------------------
   $q.all([
       $http.get("./crud/Kategorija/kategorija.php"),
@@ -840,6 +835,33 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
         if($window.localStorage.getItem("potkategorija")!="" && $window.localStorage.getItem("potkategorija")!=null){
           $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));   
          }
+         for(var j=0;j<$scope.vPotkategorije.length;j++){
+            DohvatiArtiklePoKategoriji($scope.vPotkategorije[j].m_nId,$scope.vPotkategorije[j].m_nParentCategoryId);
+         }
+         console.log($scope.countArtikli);
+         $scope.dataSource = {
+          "chart": {
+              "caption": "Artikli po kategorijama",
+              "subCaption": "Broj artikala na svakoj kategoriji",
+              "xAxisName": "Kategorija",
+              "yAxisName": "Broj artikala",
+              "theme": "fusion",
+          },
+          "data": (function() {
+            var data = [];
+        
+            for (var i = 0; i < $scope.vKategorije.length; i++) {
+              // for(var j = 0; j < $scope.vKategorije[i].m_oPotkategorije.length;j++){
+                data.push({
+                    "label": $scope.vKategorije[i].m_sNazivCategory,
+                    "value": $scope.countArtikli               
+                })
+            // }
+          }
+        
+            return data;
+        })()
+      };
     });
   
   //-----------------API za dohvacanje neaktivnih artikala iz baze----------------
