@@ -805,20 +805,6 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
     }),function(response){
     };
   }
-
-  function DohvatiArtiklePoKategoriji(idPotkategorije,parentCategoryID){
-    oPotkategorija={potkategorijaID:idPotkategorije};
-    $http({
-      url: "./crud/Artikl/readArtikliPotkategorije.php",
-      method: "POST",
-      headers: {'Content-Type': 'application/json'},
-      data: JSON.stringify(oPotkategorija)
-    }).then(function(response){
-      console.log(response.data.length);
-      $scope.countArtikli=response.data.length; 
-    }),function(response){
-    };
-  }
   //------------skup GET zahtjeva za dohvaćanje podataka iz baze------------------------
   $q.all([
       $http.get("./crud/Kategorija/kategorija.php"),
@@ -835,10 +821,6 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
         if($window.localStorage.getItem("potkategorija")!="" && $window.localStorage.getItem("potkategorija")!=null){
           $scope.PosaljiIdPotkategorije($window.localStorage.getItem("potkategorija"));   
          }
-         for(var j=0;j<$scope.vPotkategorije.length;j++){
-            DohvatiArtiklePoKategoriji($scope.vPotkategorije[j].m_nId,$scope.vPotkategorije[j].m_nParentCategoryId);
-         }
-         console.log($scope.countArtikli);
          $scope.dataSource = {
           "chart": {
               "caption": "Artikli po kategorijama",
@@ -849,20 +831,28 @@ $scope.VratiArtikl=function(idArtikla,nazivArtikla){
           },
           "data": (function() {
             var data = [];
-        
+            var count=0;
             for (var i = 0; i < $scope.vKategorije.length; i++) {
-              // for(var j = 0; j < $scope.vKategorije[i].m_oPotkategorije.length;j++){
-                data.push({
-                    "label": $scope.vKategorije[i].m_sNazivCategory,
-                    "value": $scope.countArtikli               
-                })
-            // }
-          }
-        
-            return data;
-        })()
-      };
-    });
+              oKategorija={kategorijaID:$scope.vKategorije[i].m_nIdCategory};
+               $http({
+                  url: "./crud/Artikl/readArtikliPoKategoriji.php",
+                  method: "POST",
+                  async:false,
+                  headers: {'Content-Type': 'application/json'},
+                  data: JSON.stringify(oKategorija)
+                }).then(function(response){
+                  data.push({
+                      "label": $scope.vKategorije[count].m_sNazivCategory,
+                      "value": response.data.length         
+                  })
+                  count++;
+                }),function(response){
+                };
+              }
+                return data;
+              })()
+                  };
+                });
   
   //-----------------API za dohvacanje neaktivnih artikala iz baze----------------
   $scope.DohvatiNeaktivneArtikle=function(){
